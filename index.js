@@ -11,8 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the API!" });
+app.get("/", (req, res) => {
+  // health check endpoint
+  res.json({ message: "API is running!" });
 });
 
 const PORT = process.env.PORT || 3000;
