@@ -117,7 +117,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect("mongodb+srv://calebmuteti4_db_user:anypassword2026@sait.gdck9x2.mongodb.net/?appName=sait")
   .then(async () => {
     logger.info('MongoDB connected successfully.');
 
