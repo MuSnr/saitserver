@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 
-/**
- * Asset model — mirrors the Excel asset register columns exactly:
- * School | Insurance Class | Item Description | Serial/Location |
- * Quantity | Unit Price (ZAR) - 2025 | Sum Insured | DUPLICATE | Location | Insurance Status | Timestamp
- */
 const assetSchema = new mongoose.Schema(
   {
     // Auto-generated system ID
     assetId: { type: String, unique: true },
 
-    // ── Col A: School (campus/subsidiary) ──────────────────────────────────
+    // Col A: School / Campus
     subsidiary: { type: String, required: true },
 
-    // ── Col B: Insurance Class ─────────────────────────────────────────────
+    // Col B: Insurance Class
     insuranceClass: {
       type: String,
       required: true,
@@ -33,71 +28,76 @@ const assetSchema = new mongoose.Schema(
       ],
     },
 
-    // ── Col C: Item Description ────────────────────────────────────────────
+    // Col C: Item Description
     description: { type: String, required: true },
 
-    // ── Col D: Serial/Location (dual-purpose)
-    // For electronics/BAR → serial number
-    // For furniture/buildings → grade or room (e.g. "Grade 2", "Common Areas")
-    serialNumber: { type: String, default: '' },   // serial number for devices
-    gradeLocation: { type: String, default: '' },  // grade/room for furniture & buildings
+    // Col D: Serial number (electronics) or grade/room (furniture/buildings)
+    serialNumber:  { type: String, default: '' },
+    gradeLocation: { type: String, default: '' },
 
-    // ── Col E: Quantity ────────────────────────────────────────────────────
+    // Col E: Quantity
     quantity: { type: Number, default: 1, min: 0 },
 
-    // ── Col F: Unit Price (ZAR) - 2025 ────────────────────────────────────
+    // Col F: Unit Price (ZAR)
     unitPrice: { type: Number, required: true, min: 0 },
 
-    // ── Col G: Sum Insured (quantity × unitPrice) — stored for audit ───────
+    // Col G: Sum Insured — auto-computed on save (quantity × unitPrice)
     sumInsured: { type: Number, default: 0 },
 
-    // ── Col H: DUPLICATE flag ──────────────────────────────────────────────
-    isDuplicate: { type: Boolean, default: false },
-    duplicateNote: { type: String, default: '' },
+    // Col H: Duplicate flag
+    isDuplicate:   { type: Boolean, default: false },
+    duplicateNote: { type: String,  default: '' },
 
-    // ── Col I: Location (sub-campus: "Ruimsig JS", "Ruimsig SS") ──────────
+    // Col I: Sub-campus / location
     subLocation: { type: String, default: '' },
 
-    // ── Col J: Insurance Status ────────────────────────────────────────────
+    // Col J: Insurance Status
     insuranceStatus: {
       type: String,
       enum: ['Insured', 'Request Removal', 'Request Addition', 'Stolen', 'Not Insured', ''],
       default: '',
     },
 
-    // ── Col K: Timestamp (auto-set when insuranceStatus changes) ──────────
+    // Col K: Timestamp — auto-set when insuranceStatus changes
     statusChangedAt: { type: Date, default: null },
 
-    // ── Additional context fields ──────────────────────────────────────────
-    year: { type: Number, default: new Date().getFullYear() }, // pricing year
+    // Pricing year
+    year: { type: Number, default: () => new Date().getFullYear() },
+
     notes: { type: String, default: '' },
 
-    // ── Audit ──────────────────────────────────────────────────────────────
+    // Reconciliation — link to the matching InsuranceRecord
+    linkedInsuranceRecordId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'InsuranceRecord',
+      default: null,
+    },
+
+    // Audit
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }
 );
 
-// Auto-generate assetId and compute sumInsured before save
-assetSchema.pre('save', async function () {
-  // Generate ID
+// Auto-generate assetId and compute sumInsured before every save
+assetSchema.pre('save', async function (next) {
   if (!this.assetId) {
     const count = await mongoose.model('Asset').countDocuments();
     this.assetId = `AST-${String(count + 1).padStart(5, '0')}`;
   }
 
-  // Always compute sumInsured from source of truth
   this.sumInsured = (this.quantity || 0) * (this.unitPrice || 0);
 
-  // Stamp timestamp when insuranceStatus is set
   if (this.isModified('insuranceStatus') && this.insuranceStatus) {
     this.statusChangedAt = new Date();
   }
+
+  next();
 });
 
-// Index for fast search
 assetSchema.index({ subsidiary: 1, insuranceClass: 1 });
 assetSchema.index({ serialNumber: 1 });
+assetSchema.index({ linkedInsuranceRecordId: 1 });
 
 module.exports = mongoose.model('Asset', assetSchema);

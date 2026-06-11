@@ -61,12 +61,13 @@ const claimSchema = new mongoose.Schema(
 );
 
 // Auto-generate claimId in Excel format: C002, C003…
-claimSchema.pre('save', async function () {
+claimSchema.pre('save', async function (next) {
   if (!this.claimId) {
     const count = await mongoose.model('Claim').countDocuments();
     // Start from C002 to match the Excel sheet (C001 is implied as first)
     this.claimId = `C${String(count + 2).padStart(3, '0')}`;
   }
+  next();
 });
 
 module.exports = mongoose.model('Claim', claimSchema);

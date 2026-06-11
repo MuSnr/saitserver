@@ -48,6 +48,39 @@ const createPolicy = async (req, res) => {
   }
 };
 
+// PUT /api/policies/:id
+const updatePolicy = async (req, res) => {
+  try {
+    const updates = { ...req.body };
+    if (updates.premiumValue !== undefined) updates.premiumValue = Number(updates.premiumValue);
+
+    // Append new files if uploaded
+    if (req.files && req.files.length > 0) {
+      const newDocs = req.files.map((f) => ({
+        filename: f.filename,
+        originalName: f.originalname,
+        mimetype: f.mimetype,
+        size: f.size,
+      }));
+      const existing = await Policy.findById(req.params.id).select('documents');
+      updates.documents = [...(existing?.documents || []), ...newDocs];
+    }
+
+    const policy = await Policy.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    }).populate('createdBy', 'name email');
+
+    if (!policy) return res.status(404).json({ success: false, message: 'Policy not found.' });
+
+    logger.info(`Policy ${policy._id} updated by ${req.user.email}`);
+    return res.status(200).json({ success: true, policy });
+  } catch (err) {
+    logger.error('Update policy error:', err);
+    return res.status(500).json({ success: false, message: 'Error updating policy.' });
+  }
+};
+
 // DELETE /api/policies/:id
 const deletePolicy = async (req, res) => {
   try {
@@ -61,4 +94,4 @@ const deletePolicy = async (req, res) => {
   }
 };
 
-module.exports = { getPolicies, createPolicy, deletePolicy };
+module.exports = { getPolicies, createPolicy, updatePolicy, deletePolicy };

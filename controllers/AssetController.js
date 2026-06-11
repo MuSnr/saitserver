@@ -1,7 +1,13 @@
 const Asset = require('../models/Asset');
 const logger = require('../services/logger');
+const {
+  autoLinkAsset,
+  propagateAssetStatusToInsurance,
+  onAssetDeleted,
+  unlinkAsset,
+} = require('../services/reconciliationService');
 
-// GET /api/assets
+// ── GET /api/assets ───────────────────────────────────────────────────────────
 const getAssets = async (req, res) => {
   try {
     const { campus, insuranceClass, insuranceStatus, subLocation, search } = req.query;
@@ -25,15 +31,16 @@ const getAssets = async (req, res) => {
 
     if (search) {
       filter.$or = [
-        { description: { $regex: search, $options: 'i' } },
-        { serialNumber: { $regex: search, $options: 'i' } },
-        { assetId: { $regex: search, $options: 'i' } },
+        { description:   { $regex: search, $options: 'i' } },
+        { serialNumber:  { $regex: search, $options: 'i' } },
+        { assetId:       { $regex: search, $options: 'i' } },
         { gradeLocation: { $regex: search, $options: 'i' } },
       ];
     }
 
     const assets = await Asset.find(filter)
       .populate('createdBy', 'name email')
+      .populate('linkedInsuranceRecordId', 'status sumInsured monthlyPremium policyReference')
       .sort({ createdAt: -1 });
 
     return res.status(200).json({ success: true, assets });
@@ -43,23 +50,13 @@ const getAssets = async (req, res) => {
   }
 };
 
-// POST /api/assets
+// ── POST /api/assets ──────────────────────────────────────────────────────────
 const createAsset = async (req, res) => {
   try {
     const {
-      subsidiary,
-      insuranceClass,
-      description,
-      serialNumber,
-      gradeLocation,
-      quantity,
-      unitPrice,
-      isDuplicate,
-      duplicateNote,
-      subLocation,
-      insuranceStatus,
-      year,
-      notes,
+      subsidiary, insuranceClass, description,
+      serialNumber, gradeLocation, quantity, unitPrice,
+      isDuplicate, duplicateNote, subLocation, insuranceStatus, year, notes,
     } = req.body;
 
     if (!subsidiary || !insuranceClass || !description || !unitPrice) {
@@ -73,38 +70,50 @@ const createAsset = async (req, res) => {
       subsidiary,
       insuranceClass,
       description,
-      serialNumber: serialNumber || '',
+      serialNumber:  serialNumber  || '',
       gradeLocation: gradeLocation || '',
-      quantity: Number(quantity) || 1,
-      unitPrice: Number(unitPrice),
-      isDuplicate: isDuplicate === true || isDuplicate === 'true',
+      quantity:      Number(quantity)  || 1,
+      unitPrice:     Number(unitPrice),
+      isDuplicate:   isDuplicate === true || isDuplicate === 'true',
       duplicateNote: duplicateNote || '',
-      subLocation: subLocation || '',
+      subLocation:   subLocation  || '',
       insuranceStatus: insuranceStatus || '',
-      year: Number(year) || new Date().getFullYear(),
-      notes: notes || '',
-      createdBy: req.user._id,
+      year:          Number(year) || new Date().getFullYear(),
+      notes:         notes || '',
+      createdBy:     req.user._id,
     });
 
+    // Attempt to auto-link to matching insurance record (non-blocking)
+    autoLinkAsset(asset).catch((e) =>
+      logger.warn(`Auto-link failed for Asset ${asset.assetId}: ${e.message}`)
+    );
+
     logger.info(`Asset created: ${asset.assetId} by ${req.user.email}`);
-    return res.status(201).json({ success: true, message: 'Asset created.', asset });
+
+    // Re-fetch with populated link so the frontend gets the full object
+    const populated = await Asset.findById(asset._id)
+      .populate('linkedInsuranceRecordId', 'status sumInsured monthlyPremium policyReference');
+
+    return res.status(201).json({ success: true, message: 'Asset created.', asset: populated });
   } catch (err) {
     logger.error('Create asset error:', err);
     return res.status(500).json({ success: false, message: 'Error creating asset.' });
   }
 };
 
-// PUT /api/assets/:id
+// ── PUT /api/assets/:id ───────────────────────────────────────────────────────
 const updateAsset = async (req, res) => {
   try {
+    const existing = await Asset.findById(req.params.id);
+    if (!existing) return res.status(404).json({ success: false, message: 'Asset not found.' });
+
+    const prevStatus = existing.insuranceStatus;
+
     // Recompute sumInsured if price/qty changed
     if (req.body.unitPrice !== undefined || req.body.quantity !== undefined) {
-      const existing = await Asset.findById(req.params.id);
-      if (existing) {
-        req.body.sumInsured =
-          (Number(req.body.quantity) || existing.quantity) *
-          (Number(req.body.unitPrice) || existing.unitPrice);
-      }
+      req.body.sumInsured =
+        (Number(req.body.quantity) ?? existing.quantity) *
+        (Number(req.body.unitPrice) ?? existing.unitPrice);
     }
 
     // Stamp status timestamp if status is being changed
@@ -117,8 +126,26 @@ const updateAsset = async (req, res) => {
     const asset = await Asset.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
-    });
+    }).populate('linkedInsuranceRecordId', 'status sumInsured monthlyPremium policyReference');
+
     if (!asset) return res.status(404).json({ success: false, message: 'Asset not found.' });
+
+    // Propagate status change to linked insurance record
+    if (
+      req.body.insuranceStatus &&
+      req.body.insuranceStatus !== prevStatus &&
+      asset.linkedInsuranceRecordId
+    ) {
+      propagateAssetStatusToInsurance(asset._id, asset.insuranceStatus).catch((e) =>
+        logger.warn(`Status propagation failed for Asset ${asset.assetId}: ${e.message}`)
+      );
+    }
+
+    // If the link was manually cleared, unlink properly
+    if (req.body.linkedInsuranceRecordId === null && existing.linkedInsuranceRecordId) {
+      await unlinkAsset(asset._id);
+    }
+
     logger.info(`Asset ${asset.assetId} updated by ${req.user.email}`);
     return res.status(200).json({ success: true, asset });
   } catch (err) {
@@ -127,11 +154,17 @@ const updateAsset = async (req, res) => {
   }
 };
 
-// DELETE /api/assets/:id
+// ── DELETE /api/assets/:id ────────────────────────────────────────────────────
 const deleteAsset = async (req, res) => {
   try {
-    const asset = await Asset.findByIdAndDelete(req.params.id);
+    const asset = await Asset.findById(req.params.id);
     if (!asset) return res.status(404).json({ success: false, message: 'Asset not found.' });
+
+    // Clear the linked insurance record's back-reference before deleting
+    await onAssetDeleted(asset);
+
+    await asset.deleteOne();
+
     logger.info(`Asset ${asset.assetId} deleted by ${req.user.email}`);
     return res.status(200).json({ success: true, message: 'Asset deleted.' });
   } catch (err) {

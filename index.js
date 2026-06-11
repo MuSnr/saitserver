@@ -20,6 +20,8 @@ const policyRoutes = require('./routes/policyRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const campusRoutes = require('./routes/campusRoutes');
 const subCampusRoutes = require('./routes/subCampusRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+const reconciliationRoutes = require('./routes/reconciliationRoutes');
 
 const app = express();
 
@@ -87,6 +89,8 @@ app.use('/api/policies', policyRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/campuses', campusRoutes);
 app.use('/api/sub-campuses', subCampusRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/reconciliation', reconciliationRoutes);
 
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
