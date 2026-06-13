@@ -1,99 +1,64 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 
 const assetSchema = new mongoose.Schema(
   {
-    // Auto-generated system ID
-    assetId: { type: String, unique: true },
-
-    // Col A: School / Campus
-    subsidiary: { type: String, required: true },
-
-    // Col B: Insurance Class
+    assetId:      { type: String, unique: true },
+    subsidiary:   { type: String, required: true },
     insuranceClass: {
       type: String,
       required: true,
       enum: [
-        'Fire',
-        'Buildings Combined',
-        'Business All Risk',
-        'Electronic Equipment',
-        'Theft Section',
-        'Business Interruption',
-        'Public Liability',
-        'Umbrella Liability',
-        'Employers Liability',
-        'Sasria',
-        'Broker Fees',
-        'TWK Assist / Bystand',
+        'Fire','Buildings Combined','Business All Risk','Electronic Equipment',
+        'Theft Section','Business Interruption','Public Liability','Umbrella Liability',
+        'Employers Liability','Sasria','Broker Fees','TWK Assist / Bystand',
       ],
     },
-
-    // Col C: Item Description
-    description: { type: String, required: true },
-
-    // Col D: Serial number (electronics) or grade/room (furniture/buildings)
+    description:   { type: String, required: true },
     serialNumber:  { type: String, default: '' },
     gradeLocation: { type: String, default: '' },
-
-    // Col E: Quantity
-    quantity: { type: Number, default: 1, min: 0 },
-
-    // Col F: Unit Price (ZAR)
-    unitPrice: { type: Number, required: true, min: 0 },
-
-    // Col G: Sum Insured — auto-computed on save (quantity × unitPrice)
-    sumInsured: { type: Number, default: 0 },
-
-    // Col H: Duplicate flag
+    quantity:      { type: Number, default: 1, min: 0 },
+    unitPrice:     { type: Number, required: true, min: 0 },
+    sumInsured:    { type: Number, default: 0 },
     isDuplicate:   { type: Boolean, default: false },
     duplicateNote: { type: String,  default: '' },
-
-    // Col I: Sub-campus / location
-    subLocation: { type: String, default: '' },
-
-    // Col J: Insurance Status
+    subLocation:   { type: String,  default: '' },
     insuranceStatus: {
       type: String,
-      enum: ['Insured', 'Request Removal', 'Request Addition', 'Stolen', 'Not Insured', ''],
+      enum: ['Insured','Request Removal','Request Addition','Stolen','Not Insured',''],
       default: '',
     },
-
-    // Col K: Timestamp — auto-set when insuranceStatus changes
     statusChangedAt: { type: Date, default: null },
-
-    // Pricing year
-    year: { type: Number, default: () => new Date().getFullYear() },
-
+    year:  { type: Number, default: function() { return new Date().getFullYear(); } },
     notes: { type: String, default: '' },
-
-    // Reconciliation — link to the matching InsuranceRecord
     linkedInsuranceRecordId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'InsuranceRecord',
+      ref:  'InsuranceRecord',
       default: null,
     },
-
-    // Audit
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }
 );
 
-// Auto-generate assetId and compute sumInsured before every save
-assetSchema.pre('save', async function (next) {
+assetSchema.pre('save', async function() {
   if (!this.assetId) {
-    const count = await mongoose.model('Asset').countDocuments();
-    this.assetId = `AST-${String(count + 1).padStart(5, '0')}`;
+    // Use highest existing assetId number + 1 to avoid gaps from deletions
+    const last = await mongoose.model('Asset')
+      .findOne({ assetId: { $exists: true } }, { assetId: 1 })
+      .sort({ assetId: -1 })
+      .lean();
+    let next = 1;
+    if (last && last.assetId) {
+      const num = parseInt(last.assetId.replace('AST-', ''), 10);
+      if (!isNaN(num)) next = num + 1;
+    }
+    this.assetId = 'AST-' + String(next).padStart(5, '0');
   }
-
   this.sumInsured = (this.quantity || 0) * (this.unitPrice || 0);
-
   if (this.isModified('insuranceStatus') && this.insuranceStatus) {
     this.statusChangedAt = new Date();
   }
-
-  next();
 });
 
 assetSchema.index({ subsidiary: 1, insuranceClass: 1 });

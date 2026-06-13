@@ -282,3 +282,197 @@
 2026-06-11 19:36:07 [info]: Insurance record created by qode.current@gmail.com: 6a2ae3f74ff792c81fbca4b6
 2026-06-11 19:37:09 [info]: Insurance record 6a2ae3f74ff792c81fbca4b6 updated by qode.current@gmail.com
 2026-06-11 19:37:50 [info]: Auto-link run by qode.current@gmail.com: 0 linked, 1 skipped
+2026-06-11 19:48:29 [info]: MongoDB connected successfully.
+2026-06-11 19:48:31 [info]: SAIT API server running on port 5000 [development]
+2026-06-11 20:41:42 [info]: Sub-campus "Boksburg JS" created under "Boksburg" by qode.current@gmail.com
+2026-06-11 20:42:13 [info]: Sub-campus "Boksburg SS" created under "Boksburg" by qode.current@gmail.com
+2026-06-11 20:42:31 [info]: Sub-campus "test sub1" deleted by qode.current@gmail.com
+2026-06-12 09:27:43 [info]: MongoDB connected successfully.
+2026-06-12 09:27:45 [info]: SAIT API server running on port 5000 [development]
+2026-06-12 09:29:17 [info]: MongoDB connected successfully.
+2026-06-12 09:29:20 [info]: SAIT API server running on port 5000 [development]
+2026-06-12 09:42:55 [info]: Admin qode.current@gmail.com created user: cmuteti@novapioneer.com
+2026-06-12 09:43:10 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-12 10:22:56 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-12 10:30:56 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 1 skipped
+2026-06-12 12:01:37 [info]: Insurance record 6a2ae3f74ff792c81fbca4b6 updated by cmuteti@novapioneer.com
+2026-06-12 12:01:49 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 1 skipped
+2026-06-12 12:55:58 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-12 15:33:00 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2bfc7c6117e321f7a57ff4
+2026-06-12 15:44:39 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2bff376117e321f7a57ff5
+2026-06-12 15:46:40 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:61:24)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:402:5)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-12 15:47:01 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:61:24)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:402:5)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-12 15:50:34 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:61:24)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:402:5)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-12 16:02:44 [info]: Insurance record 6a2bff376117e321f7a57ff5 updated by cmuteti@novapioneer.com
+2026-06-12 16:25:02 [info]: Insurance record 6a2bff376117e321f7a57ff5 updated by cmuteti@novapioneer.com
+2026-06-12 16:58:39 [info]: Asset AST-00001 updated by cmuteti@novapioneer.com
+2026-06-12 16:59:12 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-12 16:59:23 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-12 17:00:49 [info]: Insurance record 6a2bff376117e321f7a57ff5 updated by cmuteti@novapioneer.com
+2026-06-12 17:08:31 [info]: Policy created by cmuteti@novapioneer.com: 6a2c12df6117e321f7a57ff9
+2026-06-12 17:13:48 [info]: Policy 6a2c12df6117e321f7a57ff9 deleted by cmuteti@novapioneer.com
+2026-06-12 17:18:59 [info]: User 6a2ab11b316597599cff3374 updated by cmuteti@novapioneer.com
+2026-06-12 19:34:11 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-06-12 19:34:50 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 17:31:55 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-13 17:32:38 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-13 17:38:17 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-13 17:39:47 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2d6bb36117e321f7a57ffa
+2026-06-13 17:40:02 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:96:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:61:24)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:402:5)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-13 17:43:38 [info]: MongoDB connected successfully.
+2026-06-13 17:43:39 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:46:57 [info]: MongoDB connected successfully.
+2026-06-13 17:46:59 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:47:07 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:72:5)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-13 17:47:09 [error]: TypeError: next is not a function
+    at model.<anonymous> (C:\Users\Novaneer\Desktop\backend\models\Asset.js:72:5)
+    at Kareem.execPre (C:\Users\Novaneer\Desktop\backend\node_modules\kareem\index.js:59:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-06-13 17:47:22 [info]: Asset created: undefined by cmuteti@novapioneer.com
+2026-06-13 17:50:17 [info]: MongoDB connected successfully.
+2026-06-13 17:50:19 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:50:41 [info]: MongoDB connected successfully.
+2026-06-13 17:50:44 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:50:57 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 17:53:16 [info]: MongoDB connected successfully.
+2026-06-13 17:53:19 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:53:25 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 17:53:45 [info]: Reconciliation: linked Asset AST-00001 ↔ InsuranceRecord 6a2bff376117e321f7a57ff5
+2026-06-13 17:53:45 [info]: Manual link: Asset AST-00001 ↔ InsuranceRecord 6a2bff376117e321f7a57ff5 by cmuteti@novapioneer.com
+2026-06-13 17:53:53 [info]: Reconciliation: linked Asset AST-00003 ↔ InsuranceRecord 6a2ae3f74ff792c81fbca4b6
+2026-06-13 17:53:53 [info]: Auto-link run by cmuteti@novapioneer.com: 1 linked, 0 skipped
+2026-06-13 17:54:03 [error]: MongoServerError: E11000 duplicate key error collection: test.assets index: assetId_1 dup key: { assetId: "AST-00003" }
+    at InsertOneOperation.handleOk (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:194:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async Collection.insertOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:154:16)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:433:16)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-13 17:54:47 [error]: MongoServerError: E11000 duplicate key error collection: test.assets index: assetId_1 dup key: { assetId: "AST-00003" }
+    at InsertOneOperation.handleOk (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:194:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async Collection.insertOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:154:16)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:433:16)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-13 17:55:19 [info]: MongoDB connected successfully.
+2026-06-13 17:55:22 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:56:06 [error]: MongoServerError: E11000 duplicate key error collection: test.assets index: assetId_1 dup key: { assetId: "AST-00003" }
+    at InsertOneOperation.handleOk (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:194:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async Collection.insertOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:154:16)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:433:16)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createAsset (C:\Users\Novaneer\Desktop\backend\controllers\AssetController.js:69:19)
+2026-06-13 17:56:24 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2d6f98590b63daf7bfc549
+2026-06-13 17:56:44 [info]: MongoDB connected successfully.
+2026-06-13 17:56:47 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 17:57:15 [info]: Asset created: AST-00004 by cmuteti@novapioneer.com
+2026-06-13 17:57:16 [info]: Reconciliation: linked Asset AST-00004 ↔ InsuranceRecord 6a2bfc7c6117e321f7a57ff4
+2026-06-13 17:57:16 [info]: Auto-linked Asset AST-00004 to InsuranceRecord 6a2bfc7c6117e321f7a57ff4 (score: 100)
+2026-06-13 17:57:30 [info]: Asset created: AST-00005 by cmuteti@novapioneer.com
+2026-06-13 17:57:51 [info]: Asset created: AST-00006 by cmuteti@novapioneer.com
+2026-06-13 17:57:52 [info]: Reconciliation: linked Asset AST-00006 ↔ InsuranceRecord 6a2d6bb36117e321f7a57ffa
+2026-06-13 17:57:52 [info]: Auto-linked Asset AST-00006 to InsuranceRecord 6a2d6bb36117e321f7a57ffa (score: 100)
+2026-06-13 17:58:03 [info]: Asset created: AST-00007 by cmuteti@novapioneer.com
+2026-06-13 17:58:12 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2d7004681568a7744cf5aa
+2026-06-13 17:58:20 [info]: Policy created by cmuteti@novapioneer.com: 6a2d700c681568a7744cf5ab
+2026-06-13 17:58:30 [error]: MongoServerError: E11000 duplicate key error collection: test.claims index: claimId_1 dup key: { claimId: "C003" }
+    at InsertOneOperation.handleOk (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:194:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async Collection.insertOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:154:16)
+    at async model.$__save (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:433:16)
+    at async maybeTracedSave (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:674:7)
+    at async model.create (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\model.js:2762:5)
+    at async createClaim (C:\Users\Novaneer\Desktop\backend\controllers\ClaimController.js:48:19)
+2026-06-13 17:59:38 [info]: MongoDB connected successfully.
+2026-06-13 17:59:41 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:00:22 [info]: Claim created: C004 by cmuteti@novapioneer.com
+2026-06-13 18:00:31 [info]: Policy created by cmuteti@novapioneer.com: 6a2d708ec20358babac17784
+2026-06-13 18:00:41 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2d7099c20358babac17785
+2026-06-13 18:01:05 [info]: Asset created: AST-00008 by cmuteti@novapioneer.com
+2026-06-13 18:01:35 [info]: Admin cmuteti@novapioneer.com created user: fyjopojo@mailinator.com
+2026-06-13 18:01:40 [info]: User 6a2d70cfc20358babac17787 (fyjopojo@mailinator.com) deleted by admin cmuteti@novapioneer.com
+2026-06-13 18:01:47 [info]: Campus created: Labore ut corporis e by cmuteti@novapioneer.com
+2026-06-13 18:01:52 [info]: Campus Labore ut corporis e deleted by cmuteti@novapioneer.com
+2026-06-13 18:02:08 [info]: Asset created: AST-00009 by cmuteti@novapioneer.com
+2026-06-13 18:02:09 [info]: Reconciliation: linked Asset AST-00009 ↔ InsuranceRecord 6a2d7004681568a7744cf5aa
+2026-06-13 18:02:09 [info]: Auto-linked Asset AST-00009 to InsuranceRecord 6a2d7004681568a7744cf5aa (score: 100)
+2026-06-13 18:02:13 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 2 skipped
+2026-06-13 18:10:48 [info]: Reconciliation: unlinked Asset AST-00003
+2026-06-13 18:10:48 [info]: Manual unlink: Asset 6a2d6d7945498934f234d075 by cmuteti@novapioneer.com
+2026-06-13 18:17:01 [info]: MongoDB connected successfully.
+2026-06-13 18:17:03 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:17:34 [info]: MongoDB connected successfully.
+2026-06-13 18:17:35 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:17:46 [info]: MongoDB connected successfully.
+2026-06-13 18:17:49 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:21:00 [info]: MongoDB connected successfully.
+2026-06-13 18:21:03 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:21:12 [info]: MongoDB connected successfully.
+2026-06-13 18:21:14 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:31:46 [info]: Reconciliation: linked Asset AST-00003 ↔ InsuranceRecord 6a2ae3f74ff792c81fbca4b6
+2026-06-13 18:31:46 [info]: Auto-link run by cmuteti@novapioneer.com: 1 linked, 2 skipped
+2026-06-13 18:32:05 [info]: Asset created: AST-00010 by cmuteti@novapioneer.com
+2026-06-13 18:32:18 [info]: Insurance record created by cmuteti@novapioneer.com: 6a2d7802e1faf63dff599ff5
+2026-06-13 18:32:33 [info]: Claim created: C005 by cmuteti@novapioneer.com
+2026-06-13 18:32:43 [info]: Policy created by cmuteti@novapioneer.com: 6a2d781ae1faf63dff599ff7
+2026-06-13 18:33:13 [info]: Admin cmuteti@novapioneer.com created user: vyhezunow@mailinator.com
+2026-06-13 18:33:18 [info]: User 6a2d7839e1faf63dff599ff8 (vyhezunow@mailinator.com) deleted by admin cmuteti@novapioneer.com
