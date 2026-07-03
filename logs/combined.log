@@ -476,3 +476,769 @@
 2026-06-13 18:32:43 [info]: Policy created by cmuteti@novapioneer.com: 6a2d781ae1faf63dff599ff7
 2026-06-13 18:33:13 [info]: Admin cmuteti@novapioneer.com created user: vyhezunow@mailinator.com
 2026-06-13 18:33:18 [info]: User 6a2d7839e1faf63dff599ff8 (vyhezunow@mailinator.com) deleted by admin cmuteti@novapioneer.com
+2026-06-13 18:41:05 [info]: MongoDB connected successfully.
+2026-06-13 18:41:07 [info]: SAIT API server running on port 5000 [development]
+2026-06-13 18:41:09 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 21:29:47 [info]: Claim C004 deleted by cmuteti@novapioneer.com
+2026-06-13 21:31:36 [info]: Asset AST-00008 updated by cmuteti@novapioneer.com
+2026-06-13 21:31:47 [info]: Asset AST-00007 updated by cmuteti@novapioneer.com
+2026-06-13 23:00:42 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 23:00:57 [info]: User 6a2ab11b316597599cff3374 updated by cmuteti@novapioneer.com
+2026-06-13 23:01:10 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-13 23:01:25 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:01:31 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:01:38 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:03:05 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-13 23:03:17 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 23:05:48 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-13 23:06:39 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:08:02 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:08:17 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-13 23:15:48 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-13 23:16:05 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-13 23:25:34 [info]: MongoDB connected successfully.
+2026-06-13 23:25:35 [info]: SAIT API server running on port 5000 [development]
+2026-06-15 17:55:00 [info]: MongoDB connected successfully.
+2026-06-15 17:55:01 [info]: SAIT API server running on port 5000 [development]
+2026-06-15 17:59:17 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 12:09:23 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 12:13:28 [info]: Asset created: AST-00011 by cmuteti@novapioneer.com
+2026-06-16 12:13:29 [info]: Reconciliation: linked Asset AST-00011 ↔ InsuranceRecord 6a2d6f98590b63daf7bfc549
+2026-06-16 12:13:29 [info]: Auto-linked Asset AST-00011 to InsuranceRecord 6a2d6f98590b63daf7bfc549 (score: 100)
+2026-06-16 12:22:08 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 12:23:14 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-16 12:23:28 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin, campus_manager]
+2026-06-16 12:48:29 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 12:49:44 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 2 skipped
+2026-06-16 12:51:58 [info]: Asset AST-00007 updated by cmuteti@novapioneer.com
+2026-06-16 13:42:03 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 13:42:23 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 14:41:01 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 15:48:30 [error]: MongoServerSelectionError: connection <monitor> to 34.80.74.216:27017 timed out
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:48:39 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:48:50 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:48:50 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:48:59 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:49:01 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:49:41 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 15:49:47 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 16:17:58 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-16 16:17:58 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-16 18:04:16 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.74.216:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 18:05:32 [error]: MongoDB connection failed:
+2026-06-16 18:13:06 [info]: MongoDB connected successfully.
+2026-06-16 18:13:08 [info]: SAIT API server running on port 5000 [development]
+2026-06-16 18:13:13 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-16 21:30:33 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 21:30:53 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 22:32:17 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-16 22:36:38 [error]: MongoServerSelectionError: connect ETIMEDOUT 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 22:36:47 [error]: MongoServerSelectionError: connect ETIMEDOUT 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-16 22:37:31 [error]: MongoDB connection failed:
+2026-06-16 22:49:01 [error]: MongoDB connection failed:
+2026-06-16 23:03:55 [info]: MongoDB connected successfully.
+2026-06-16 23:04:08 [info]: SAIT API server running on port 5000 [development]
+2026-06-16 23:04:16 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-17 05:57:28 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:260:22)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async AggregationCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\aggregation_cursor.js:57:26)
+    at async AggregationCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async AggregationCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async AggregationCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-17 05:57:28 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:260:22)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-17 05:58:24 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-17 05:58:44 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-17 07:16:12 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-17 08:14:25 [error]: MongoServerSelectionError: connect ECONNREFUSED 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-19 16:05:58 [info]: MongoDB connected successfully.
+2026-06-19 16:06:01 [info]: SAIT API server running on port 5000 [development]
+2026-06-19 16:06:16 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-19 22:05:16 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-19 22:05:32 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-19 22:05:52 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-19 22:18:32 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-19 22:21:26 [info]: Reconciliation: cleared link on Asset 6a2d6d7945498934f234d075 after InsuranceRecord 6a2ae3f74ff792c81fbca4b6 deleted
+2026-06-19 22:21:26 [info]: Insurance record 6a2ae3f74ff792c81fbca4b6 deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:29 [info]: Reconciliation: cleared link on Asset 6a2d6fcb681568a7744cf5a6 after InsuranceRecord 6a2bfc7c6117e321f7a57ff4 deleted
+2026-06-19 22:21:29 [info]: Insurance record 6a2bfc7c6117e321f7a57ff4 deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:32 [info]: Reconciliation: cleared link on Asset 6a2ac1e572d31f177ed3a0b3 after InsuranceRecord 6a2bff376117e321f7a57ff5 deleted
+2026-06-19 22:21:32 [info]: Insurance record 6a2bff376117e321f7a57ff5 deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:35 [info]: Reconciliation: cleared link on Asset 6a2d6fee681568a7744cf5a8 after InsuranceRecord 6a2d6bb36117e321f7a57ffa deleted
+2026-06-19 22:21:36 [info]: Insurance record 6a2d6bb36117e321f7a57ffa deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:40 [info]: Reconciliation: cleared link on Asset 6a3113b85ca963ec87b6cccf after InsuranceRecord 6a2d6f98590b63daf7bfc549 deleted
+2026-06-19 22:21:40 [info]: Insurance record 6a2d6f98590b63daf7bfc549 deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:43 [info]: Reconciliation: cleared link on Asset 6a2d70f0c20358babac17789 after InsuranceRecord 6a2d7004681568a7744cf5aa deleted
+2026-06-19 22:21:43 [info]: Insurance record 6a2d7004681568a7744cf5aa deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:46 [info]: Insurance record 6a2d7099c20358babac17785 deleted by cmuteti@novapioneer.com
+2026-06-19 22:21:49 [info]: Insurance record 6a2d7802e1faf63dff599ff5 deleted by cmuteti@novapioneer.com
+2026-06-20 19:18:30 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-20 19:19:57 [info]: MongoDB connected successfully.
+2026-06-20 19:19:59 [info]: SAIT API server running on port 5000 [development]
+2026-06-20 19:20:18 [info]: MongoDB connected successfully.
+2026-06-20 19:20:20 [info]: SAIT API server running on port 5000 [development]
+2026-06-20 19:20:42 [info]: MongoDB connected successfully.
+2026-06-20 19:20:44 [info]: SAIT API server running on port 5000 [development]
+2026-06-20 20:14:43 [info]: Sub-campus "Midrand JS" created under "Midrand" by cmuteti@novapioneer.com
+2026-06-20 20:15:13 [info]: Sub-campus "Midrand SS" created under "Midrand" by cmuteti@novapioneer.com
+2026-06-20 20:15:40 [info]: Sub-campus "Paulshof JS" created under "Paulshof" by cmuteti@novapioneer.com
+2026-06-20 20:16:00 [info]: Sub-campus "Paulshof SS" created under "Paulshof" by cmuteti@novapioneer.com
+2026-06-20 20:16:38 [info]: Sub-campus " Ruimsig JS" created under "Ruimsig" by cmuteti@novapioneer.com
+2026-06-20 20:16:55 [info]: Sub-campus " Ruimsig SS" created under "Ruimsig" by cmuteti@novapioneer.com
+2026-06-20 20:17:46 [info]: Sub-campus "North Riding JS" created under "North Riding" by cmuteti@novapioneer.com
+2026-06-20 20:17:59 [info]: Sub-campus "North Riding SS" created under "North Riding" by cmuteti@novapioneer.com
+2026-06-20 22:42:48 [info]: MongoDB connected successfully.
+2026-06-20 22:42:50 [info]: SAIT API server running on port 5000 [development]
+2026-06-20 22:53:39 [info]: MongoDB connected successfully.
+2026-06-20 22:53:41 [info]: SAIT API server running on port 5000 [development]
+2026-06-20 23:19:00 [info]: User logged in: muteticaleb@zetech.ac.ke (role: viewer)
+2026-06-20 23:19:16 [warn]: RBAC denied: user muteticaleb@zetech.ac.ke (role: viewer) tried to access route requiring [admin]
+2026-06-20 23:19:30 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-20 23:30:32 [info]: User 6a2ab11b316597599cff3374 updated by cmuteti@novapioneer.com
+2026-06-20 23:30:47 [info]: User 6a2ab11b316597599cff3374 updated by cmuteti@novapioneer.com
+2026-06-20 23:30:55 [info]: User logged in: muteticaleb@zetech.ac.ke (role: campus_manager)
+2026-06-20 23:31:37 [info]: Asset created: AST-00012 by muteticaleb@zetech.ac.ke
+2026-06-20 23:32:00 [info]: Insurance record created by muteticaleb@zetech.ac.ke: 6a36f8bf94677b14e64ec67a
+2026-06-20 23:50:38 [info]: User logged in: muteticaleb@zetech.ac.ke (role: campus_manager)
+2026-06-20 23:53:42 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-20 23:54:27 [info]: User logged in: muteticaleb@zetech.ac.ke (role: campus_manager)
+2026-06-20 23:54:42 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-20 23:55:41 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 9 skipped
+2026-06-21 08:54:20 [info]: Insurance record created by cmuteti@novapioneer.com: 6a377c8c94677b14e64ec67b
+2026-06-21 08:54:21 [info]: Reconciliation: linked Asset AST-00001 ↔ InsuranceRecord 6a377c8c94677b14e64ec67b
+2026-06-21 08:54:21 [info]: Auto-linked InsuranceRecord 6a377c8c94677b14e64ec67b → Asset AST-00001 (score: 60)
+2026-06-21 08:55:16 [info]: Auto-link run by cmuteti@novapioneer.com: 0 linked, 8 skipped
+2026-06-22 14:18:37 [info]: MongoDB connected successfully.
+2026-06-22 14:18:38 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 14:19:02 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 14:57:05 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-01.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-22 14:57:25 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-01.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-22 15:14:43 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 15:20:52 [info]: Asset created: AST-00013 by cmuteti@novapioneer.com
+2026-06-22 20:38:55 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-01.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-06-22 21:15:36 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 21:17:04 [info]: MongoDB connected successfully.
+2026-06-22 21:17:07 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 21:17:27 [info]: MongoDB connected successfully.
+2026-06-22 21:17:30 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 21:17:54 [info]: MongoDB connected successfully.
+2026-06-22 21:17:57 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 21:18:05 [info]: MongoDB connected successfully.
+2026-06-22 21:18:08 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 21:22:45 [error]: MongoPoolClearedError: Connection pool for ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net:27017 was cleared because another operation failed with: "read ECONNRESET"
+    at ConnectionPool.processWaitQueue (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cmap\connection_pool.js:504:82)
+    at ConnectionPool.clear (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cmap\connection_pool.js:298:14)
+    at updateServers (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:515:29)
+    at Topology.serverUpdateHandler (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:416:9)
+    at Server.<anonymous> (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:498:77)
+    at Server.emit (node:events:508:28)
+    at markServerUnknown (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\server.js:366:12)
+    at Monitor.<anonymous> (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\server.js:72:51)
+    at Monitor.emit (node:events:508:28)
+    at onHeartbeatFailed (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\monitor.js:188:17)
+2026-06-22 21:43:15 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 21:43:51 [info]: Asset created: AST-00014 by cmuteti@novapioneer.com
+2026-06-22 21:44:02 [info]: Insurance record created by cmuteti@novapioneer.com: 6a3982717eee25b4d671a5b5
+2026-06-22 21:44:13 [info]: Claim created: C006 by cmuteti@novapioneer.com
+2026-06-22 21:44:40 [info]: Policy created by cmuteti@novapioneer.com: 6a3982977eee25b4d671a5b7
+2026-06-22 21:45:53 [info]: Insurance record 6a3982717eee25b4d671a5b5 deleted by cmuteti@novapioneer.com
+2026-06-22 21:46:04 [info]: Insurance record 6a36f8bf94677b14e64ec67a deleted by cmuteti@novapioneer.com
+2026-06-22 21:47:04 [info]: Insurance bulk import by cmuteti@novapioneer.com: 0 inserted, 2416 errors
+2026-06-22 22:02:43 [info]: MongoDB connected successfully.
+2026-06-22 22:02:53 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 22:03:14 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 22:03:39 [info]: Insurance bulk import — raw headers: ["Ref_03","Ref_02","Ref_01","Subsidiary","Status","Month - Yr of Acquisition","Class of Insurance","Asset or Insurable Risk","Description or Additional Details","Brand - Model","Serial Number","Quantity","Unit Cost","Monthly Premium (ZAR)","Sum Insured","Rate","2025 Dec Premium","__EMPTY","Interest Noted","Vendor","Notes","Category"]
+2026-06-22 22:03:39 [info]: Insurance bulk import — sample row 1: {"Ref_03":"","Ref_02":"A","Ref_01":"2","Subsidiary":"Ormonde & Vumela","Status":"Insured","Month - Yr of Acquisition":"21-Jan","Class of Insurance":"Business Interruption","Asset or Insurable Risk":"Business Interruption","Description or Additional Details":"","Brand - Model":"","Serial Number":"","Quantity":"1","Unit Cost":"R 3,200,000.00","Monthly Premium (ZAR)":"R 135.93","Sum Insured":"R 3,200,000.00","Rate":"","2025 Dec Premium":"R 135.93","__EMPTY":"","Interest Noted":"","Vendor":"","Notes":"","Category":"Risk Based"}
+2026-06-22 22:03:39 [info]: Insurance bulk import — first row after mapping: {"subsidiary":"Ormonde & Vumela","status":"Insured","classOfInsurance":"Business Interruption","assetOrInsurableRisk":"Business Interruption","brandModel":"","serialNumber":"","quantity":"1","unitCost":"R 3,200,000.00","sumInsured":"R 3,200,000.00","rate":"","interestNoted":"","vendor":"","notes":"","category":"Risk Based"}
+2026-06-22 22:03:39 [warn]: Insurance bulk import first errors: [{"row":2,"reason":"Invalid Sum Insured: \"R 3,200,000.00\""},{"row":3,"reason":"Invalid Sum Insured: \"R 10,000,000.00\""},{"row":4,"reason":"Invalid Sum Insured: \"R 20,000,000.00\""},{"row":5,"reason":"Invalid Sum Insured: \"R 5,000,000.00\""},{"row":6,"reason":"Invalid Sum Insured: \"R 100,000.00\""}]
+2026-06-22 22:03:39 [info]: Insurance bulk import by cmuteti@novapioneer.com: 0 inserted, 2416 errors
+2026-06-22 22:20:38 [info]: MongoDB connected successfully.
+2026-06-22 22:20:42 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 22:24:16 [info]: Insurance bulk — detected headers: ["Ref_03","Ref_02","Ref_01","Subsidiary","Status","Month - Yr of Acquisition","Class of Insurance","Asset or Insurable Risk","Description or Additional Details","Brand - Model","Serial Number","Quantity","Unit Cost","Monthly Premium (ZAR)","Sum Insured","Rate","2025 Dec Premium","__EMPTY","Interest Noted","Vendor","Notes","Category"]
+2026-06-22 22:24:16 [info]: Insurance bulk — row 1 raw: {"Ref_03":"","Ref_02":"A","Ref_01":"2","Subsidiary":"Ormonde & Vumela","Status":"Insured","Month - Yr of Acquisition":"1/1/21","Class of Insurance":"Business Interruption","Asset or Insurable Risk":"Business Interruption","Description or Additional Details":"","Brand - Model":"","Serial Number":"","Quantity":"1","Unit Cost":"R 3,200,000.00","Monthly Premium (ZAR)":"R 135.93","Sum Insured":"R 3,200,000.00","Rate":"0.00%","2025 Dec Premium":"R 135.93","__EMPTY":"","Interest Noted":"","Vendor":"","Notes":"","Category":"Risk Based"}
+2026-06-22 22:24:17 [info]: Insurance bulk — row 1 mapped: {"subsidiary":"Ormonde & Vumela","status":"Insured","monthYrAcquisition":"1/1/21","classOfInsurance":"Business Interruption","assetOrInsurableRisk":"Business Interruption","descriptionDetails":"","brandModel":"","serialNumber":"","quantity":"1","unitCost":"R 3,200,000.00","monthlyPremium":"R 135.93","sumInsured":"R 3,200,000.00","rate":"0.00%","december2025Premium":"R 135.93","interestNoted":"","vendor":"","notes":"","category":"Risk Based"}
+2026-06-22 22:26:22 [info]: Reconciliation: cleared link on Asset 6a2ac1e572d31f177ed3a0b3 after InsuranceRecord 6a377c8c94677b14e64ec67b deleted
+2026-06-22 22:26:22 [info]: Insurance record 6a377c8c94677b14e64ec67b deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:24 [info]: Insurance record 6a398be1b2fc8f053fef266e deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:28 [info]: Insurance record 6a398be1b2fc8f053fef266f deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:31 [info]: Insurance record 6a398be2b2fc8f053fef2670 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:34 [info]: Insurance record 6a398be2b2fc8f053fef2671 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:36 [info]: Insurance record 6a398be2b2fc8f053fef2672 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:39 [info]: Insurance record 6a398be3b2fc8f053fef2673 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:42 [info]: Insurance record 6a398be3b2fc8f053fef2674 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:46 [info]: Insurance record 6a398be3b2fc8f053fef2675 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:48 [info]: Insurance record 6a398be4b2fc8f053fef2676 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:52 [info]: Insurance record 6a398be4b2fc8f053fef2677 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:55 [info]: Insurance record 6a398be4b2fc8f053fef2678 deleted by cmuteti@novapioneer.com
+2026-06-22 22:26:57 [info]: Insurance record 6a398be5b2fc8f053fef2679 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:00 [info]: Insurance record 6a398be5b2fc8f053fef267a deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:02 [info]: Insurance record 6a398be5b2fc8f053fef267b deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:06 [info]: Insurance record 6a398be6b2fc8f053fef267c deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:09 [info]: Insurance record 6a398be6b2fc8f053fef267d deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:14 [info]: Insurance record 6a398be7b2fc8f053fef267e deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:16 [info]: Insurance record 6a398be7b2fc8f053fef267f deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:19 [info]: Insurance record 6a398be7b2fc8f053fef2680 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:21 [info]: Insurance record 6a398be8b2fc8f053fef2681 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:24 [info]: Insurance record 6a398be8b2fc8f053fef2682 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:28 [info]: Insurance record 6a398be8b2fc8f053fef2683 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:36 [info]: Insurance record 6a398be9b2fc8f053fef2684 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:38 [info]: Insurance record 6a398be9b2fc8f053fef2685 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:41 [info]: Insurance record 6a398beab2fc8f053fef2686 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:43 [info]: Insurance record 6a398beab2fc8f053fef2687 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:47 [info]: Insurance record 6a398beab2fc8f053fef2688 deleted by cmuteti@novapioneer.com
+2026-06-22 22:27:49 [info]: Insurance record 6a398beab2fc8f053fef2689 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:10 [info]: Insurance record 6a398c44b2fc8f053fef27aa deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:13 [info]: Insurance record 6a398c44b2fc8f053fef27a9 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:16 [info]: Insurance record 6a398c43b2fc8f053fef27a8 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:20 [info]: Insurance record 6a398c43b2fc8f053fef27a7 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:23 [info]: Insurance record 6a398c43b2fc8f053fef27a6 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:25 [info]: Insurance record 6a398c42b2fc8f053fef27a5 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:29 [info]: Insurance record 6a398c42b2fc8f053fef27a4 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:32 [info]: Insurance record 6a398c41b2fc8f053fef27a3 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:36 [info]: Insurance record 6a398c41b2fc8f053fef27a2 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:40 [info]: Insurance record 6a398c41b2fc8f053fef27a1 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:43 [info]: Insurance record 6a398c41b2fc8f053fef27a0 deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:45 [info]: Insurance record 6a398c40b2fc8f053fef279f deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:47 [info]: Insurance record 6a398c40b2fc8f053fef279e deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:51 [info]: Insurance record 6a398c3fb2fc8f053fef279d deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:54 [info]: Insurance record 6a398c3fb2fc8f053fef279c deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:57 [info]: Insurance record 6a398c3eb2fc8f053fef279b deleted by cmuteti@novapioneer.com
+2026-06-22 22:28:59 [info]: Insurance record 6a398c3eb2fc8f053fef279a deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:02 [info]: Insurance record 6a398c3eb2fc8f053fef2799 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:04 [info]: Insurance record 6a398c3db2fc8f053fef2798 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:07 [info]: Insurance record 6a398c3db2fc8f053fef2797 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:10 [info]: Insurance record 6a398c3db2fc8f053fef2796 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:14 [info]: Insurance record 6a398c3db2fc8f053fef2795 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:20 [info]: Insurance record 6a398c3cb2fc8f053fef2794 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:24 [info]: Insurance record 6a398c3cb2fc8f053fef2793 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:27 [info]: Insurance record 6a398c3cb2fc8f053fef2792 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:31 [info]: Insurance record 6a398c3bb2fc8f053fef2791 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:34 [info]: Insurance record 6a398c3bb2fc8f053fef2790 deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:37 [info]: Insurance record 6a398c3bb2fc8f053fef278f deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:42 [info]: Insurance record 6a398c3ab2fc8f053fef278e deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:45 [info]: Insurance record 6a398c3ab2fc8f053fef278d deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:49 [info]: Insurance record 6a398c3ab2fc8f053fef278c deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:52 [info]: Insurance record 6a398c39b2fc8f053fef278b deleted by cmuteti@novapioneer.com
+2026-06-22 22:29:56 [info]: Insurance record 6a398c39b2fc8f053fef278a deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:18 [info]: Insurance record 6a398c38b2fc8f053fef2789 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:19 [info]: Insurance record 6a398c38b2fc8f053fef2789 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:23 [info]: Insurance record 6a398c37b2fc8f053fef2788 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:31 [info]: Insurance record 6a398c37b2fc8f053fef2787 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:34 [info]: Insurance record 6a398c36b2fc8f053fef2786 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:38 [info]: Insurance record 6a398c36b2fc8f053fef2785 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:45 [info]: Insurance record 6a398c36b2fc8f053fef2784 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:55 [info]: Insurance record 6a398c35b2fc8f053fef2783 deleted by cmuteti@novapioneer.com
+2026-06-22 22:31:58 [info]: Insurance record 6a398c35b2fc8f053fef2782 deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:02 [info]: Insurance record 6a398c34b2fc8f053fef2781 deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:07 [info]: Insurance record 6a398c34b2fc8f053fef2780 deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:29 [info]: Insurance record 6a398c34b2fc8f053fef277f deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:32 [info]: Insurance record 6a398c33b2fc8f053fef277e deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:39 [info]: Insurance record 6a398c33b2fc8f053fef277d deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:44 [info]: Insurance record 6a398c33b2fc8f053fef277c deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:47 [info]: Insurance record 6a398c33b2fc8f053fef277b deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:51 [info]: Insurance record 6a398c32b2fc8f053fef277a deleted by cmuteti@novapioneer.com
+2026-06-22 22:32:59 [info]: Insurance record 6a398c32b2fc8f053fef2779 deleted by cmuteti@novapioneer.com
+2026-06-22 22:33:18 [info]: Insurance record 6a398c32b2fc8f053fef2778 deleted by cmuteti@novapioneer.com
+2026-06-22 22:33:20 [info]: Insurance record 6a398c32b2fc8f053fef2778 deleted by cmuteti@novapioneer.com
+2026-06-22 22:33:28 [info]: Insurance record 6a398c32b2fc8f053fef2777 deleted by cmuteti@novapioneer.com
+2026-06-22 22:33:28 [info]: Insurance record 6a398c32b2fc8f053fef2777 deleted by cmuteti@novapioneer.com
+2026-06-22 22:33:36 [info]: Insurance record 6a398c31b2fc8f053fef2776 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:05 [info]: Insurance record 6a398c31b2fc8f053fef2775 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:09 [info]: Insurance record 6a398c31b2fc8f053fef2774 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:14 [info]: Insurance record 6a398c30b2fc8f053fef2773 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:19 [info]: Insurance record 6a398c30b2fc8f053fef2772 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:23 [info]: Insurance record 6a398c30b2fc8f053fef2771 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:32 [info]: Insurance record 6a398c30b2fc8f053fef2770 deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:39 [info]: Insurance record 6a398c2fb2fc8f053fef276f deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:43 [info]: Insurance record 6a398c2fb2fc8f053fef276e deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:49 [info]: Insurance record 6a398c2fb2fc8f053fef276d deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:52 [info]: Insurance record 6a398c2eb2fc8f053fef276c deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:57 [info]: Insurance record 6a398c2eb2fc8f053fef276b deleted by cmuteti@novapioneer.com
+2026-06-22 22:34:59 [info]: Insurance record 6a398c2eb2fc8f053fef276a deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:02 [info]: Insurance record 6a398c2eb2fc8f053fef2769 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:06 [info]: Insurance record 6a398c2db2fc8f053fef2768 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:09 [info]: Insurance record 6a398c2db2fc8f053fef2767 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:12 [info]: Insurance record 6a398c2db2fc8f053fef2766 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:16 [info]: Insurance record 6a398c2cb2fc8f053fef2765 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:18 [info]: Insurance record 6a398c2cb2fc8f053fef2764 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:21 [info]: Insurance record 6a398c2cb2fc8f053fef2763 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:24 [info]: Insurance record 6a398c2cb2fc8f053fef2762 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:27 [info]: Insurance record 6a398c2bb2fc8f053fef2761 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:29 [info]: Insurance record 6a398c2bb2fc8f053fef2760 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:31 [info]: Insurance record 6a398c2bb2fc8f053fef275f deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:34 [info]: Insurance record 6a398c2ab2fc8f053fef275e deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:38 [info]: Insurance record 6a398c2ab2fc8f053fef275d deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:40 [info]: Insurance record 6a398c2ab2fc8f053fef275c deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:43 [info]: Insurance record 6a398c2ab2fc8f053fef275b deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:48 [info]: Insurance record 6a398c29b2fc8f053fef275a deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:53 [info]: Insurance record 6a398c29b2fc8f053fef2759 deleted by cmuteti@novapioneer.com
+2026-06-22 22:35:58 [info]: Insurance record 6a398c29b2fc8f053fef2758 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:05 [info]: Insurance record 6a398c29b2fc8f053fef2757 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:08 [info]: Insurance record 6a398c28b2fc8f053fef2756 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:35 [info]: Insurance record 6a398c28b2fc8f053fef2755 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:37 [info]: Insurance record 6a398c28b2fc8f053fef2754 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:41 [info]: Insurance record 6a398c27b2fc8f053fef2753 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:44 [info]: Insurance record 6a398c27b2fc8f053fef2752 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:52 [info]: Insurance record 6a398c27b2fc8f053fef2751 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:54 [info]: Insurance record 6a398c27b2fc8f053fef2750 deleted by cmuteti@novapioneer.com
+2026-06-22 22:36:57 [info]: Insurance record 6a398c26b2fc8f053fef274f deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:00 [info]: Insurance record 6a398c26b2fc8f053fef274e deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:04 [info]: Insurance record 6a398c26b2fc8f053fef274d deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:10 [info]: Insurance record 6a398c26b2fc8f053fef274c deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:13 [info]: Insurance record 6a398c25b2fc8f053fef274b deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:16 [info]: Insurance record 6a398c25b2fc8f053fef274a deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:19 [info]: Insurance record 6a398c25b2fc8f053fef2749 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:22 [info]: Insurance record 6a398c24b2fc8f053fef2748 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:25 [info]: Insurance record 6a398c24b2fc8f053fef2747 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:42 [info]: Insurance record 6a398c24b2fc8f053fef2746 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:50 [info]: Insurance record 6a398c24b2fc8f053fef2745 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:53 [info]: Insurance record 6a398c23b2fc8f053fef2744 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:55 [info]: Insurance record 6a398c23b2fc8f053fef2743 deleted by cmuteti@novapioneer.com
+2026-06-22 22:37:58 [info]: Insurance record 6a398c23b2fc8f053fef2742 deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:00 [info]: Insurance record 6a398c22b2fc8f053fef2741 deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:03 [info]: Insurance record 6a398c22b2fc8f053fef2740 deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:06 [info]: Insurance record 6a398c22b2fc8f053fef273f deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:27 [info]: Insurance record 6a398c22b2fc8f053fef273e deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:30 [info]: Insurance record 6a398c21b2fc8f053fef273d deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:34 [info]: Insurance record 6a398c21b2fc8f053fef273c deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:37 [info]: Insurance record 6a398c21b2fc8f053fef273b deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:43 [info]: Insurance record 6a398c20b2fc8f053fef273a deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:46 [info]: Insurance record 6a398c20b2fc8f053fef2739 deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:49 [info]: Insurance record 6a398c20b2fc8f053fef2738 deleted by cmuteti@novapioneer.com
+2026-06-22 22:38:56 [info]: Insurance record 6a398c1fb2fc8f053fef2737 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:00 [info]: Insurance record 6a398c1fb2fc8f053fef2736 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:05 [info]: Insurance record 6a398c1eb2fc8f053fef2735 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:17 [info]: Insurance record 6a398c1eb2fc8f053fef2734 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:21 [info]: Insurance record 6a398c1eb2fc8f053fef2733 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:26 [info]: Insurance record 6a398c1db2fc8f053fef2732 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:30 [info]: Insurance record 6a398c1db2fc8f053fef2731 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:39 [info]: Insurance record 6a398c1db2fc8f053fef2730 deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:47 [info]: Insurance record 6a398c1cb2fc8f053fef272f deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:50 [info]: Insurance record 6a398c1cb2fc8f053fef272e deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:52 [info]: Insurance record 6a398c1cb2fc8f053fef272d deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:55 [info]: Insurance record 6a398c1bb2fc8f053fef272c deleted by cmuteti@novapioneer.com
+2026-06-22 22:39:58 [info]: Insurance record 6a398c1bb2fc8f053fef272b deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:00 [info]: Insurance record 6a398c1bb2fc8f053fef272a deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:03 [warn]: Insurance bulk first 5 errors: [{"row":1645,"reason":"Missing Class of Insurance — row skipped"},{"row":2417,"reason":"Missing Subsidiary/Campus"},{"row":2418,"reason":"Missing Subsidiary/Campus"},{"row":2419,"reason":"Missing Subsidiary/Campus"},{"row":2420,"reason":"Missing Subsidiary/Campus"}]
+2026-06-22 22:40:03 [info]: Insurance bulk by cmuteti@novapioneer.com: 2414 inserted, 729 errors
+2026-06-22 22:40:03 [info]: Insurance record 6a398c1bb2fc8f053fef2729 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:06 [info]: Insurance record 6a398c1ab2fc8f053fef2728 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:08 [info]: Insurance record 6a398c1ab2fc8f053fef2727 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:13 [info]: Insurance record 6a398c1ab2fc8f053fef2726 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:16 [info]: Insurance record 6a398c19b2fc8f053fef2725 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:19 [info]: Insurance record 6a398c19b2fc8f053fef2724 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:24 [info]: Insurance record 6a398c19b2fc8f053fef2723 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:29 [info]: Insurance record 6a398c18b2fc8f053fef2722 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:33 [info]: Insurance record 6a398c18b2fc8f053fef2721 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:36 [info]: Insurance record 6a398c18b2fc8f053fef2720 deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:39 [info]: Insurance record 6a398c18b2fc8f053fef271f deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:42 [info]: Insurance record 6a398c17b2fc8f053fef271e deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:45 [info]: Insurance record 6a398c17b2fc8f053fef271d deleted by cmuteti@novapioneer.com
+2026-06-22 22:40:50 [info]: Insurance record 6a398c17b2fc8f053fef271c deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:02 [info]: Insurance record 6a398c03b2fc8f053fef26d8 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:19 [info]: Insurance record 6a398bebb2fc8f053fef268a deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:23 [info]: Insurance record 6a398bebb2fc8f053fef268b deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:25 [info]: Insurance record 6a398becb2fc8f053fef268c deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:28 [info]: Insurance record 6a398becb2fc8f053fef268d deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:30 [info]: Insurance record 6a398bedb2fc8f053fef268e deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:33 [info]: Insurance record 6a398bedb2fc8f053fef268f deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:36 [info]: Insurance record 6a398bedb2fc8f053fef2690 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:38 [info]: Insurance record 6a398beeb2fc8f053fef2691 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:40 [info]: Insurance record 6a398beeb2fc8f053fef2692 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:43 [info]: Insurance record 6a398befb2fc8f053fef2693 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:47 [info]: Insurance record 6a398befb2fc8f053fef2694 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:52 [info]: Insurance record 6a398befb2fc8f053fef2695 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:54 [info]: Insurance record 6a398bf0b2fc8f053fef2696 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:57 [info]: Insurance record 6a398bf0b2fc8f053fef2697 deleted by cmuteti@novapioneer.com
+2026-06-22 22:41:59 [info]: Insurance record 6a398bf0b2fc8f053fef2698 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:02 [info]: Insurance record 6a398bf1b2fc8f053fef2699 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:05 [info]: Insurance record 6a398bf1b2fc8f053fef269a deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:08 [info]: Insurance record 6a398bf1b2fc8f053fef269b deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:11 [info]: Insurance record 6a398bf2b2fc8f053fef269c deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:15 [info]: Insurance record 6a398bf2b2fc8f053fef269d deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:19 [info]: Insurance record 6a398bf2b2fc8f053fef269e deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:33 [info]: Insurance record 6a398bf2b2fc8f053fef269f deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:33 [info]: Insurance record 6a398bf2b2fc8f053fef269f deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:37 [info]: Insurance record 6a398bf3b2fc8f053fef26a0 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:40 [info]: Insurance record 6a398bf3b2fc8f053fef26a1 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:42 [info]: Insurance record 6a398bf4b2fc8f053fef26a2 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:45 [info]: Insurance record 6a398bf4b2fc8f053fef26a3 deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:52 [info]: Insurance record 6a398c17b2fc8f053fef271b deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:54 [info]: Insurance record 6a398c16b2fc8f053fef271a deleted by cmuteti@novapioneer.com
+2026-06-22 22:42:57 [info]: Insurance record 6a398c16b2fc8f053fef2719 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:00 [info]: Insurance record 6a398c16b2fc8f053fef2718 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:07 [info]: Insurance record 6a398c16b2fc8f053fef2717 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:14 [info]: Insurance record 6a398c15b2fc8f053fef2716 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:19 [info]: Insurance record 6a398c15b2fc8f053fef2715 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:24 [info]: Insurance record 6a398c15b2fc8f053fef2714 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:27 [info]: Insurance record 6a398c14b2fc8f053fef2713 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:34 [info]: Insurance record 6a398c14b2fc8f053fef2711 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:35 [info]: Insurance record 6a398c14b2fc8f053fef2712 deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:43 [info]: Insurance record 6a398c00b2fc8f053fef26cd deleted by cmuteti@novapioneer.com
+2026-06-22 22:43:55 [info]: Insurance record 6a398bffb2fc8f053fef26ca deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:00 [info]: Insurance record 6a398c00b2fc8f053fef26cb deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:04 [info]: Insurance record 6a398c13b2fc8f053fef2710 deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:07 [info]: Insurance record 6a398c13b2fc8f053fef270f deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:12 [info]: Insurance record 6a398c13b2fc8f053fef270e deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:15 [info]: Insurance record 6a398c13b2fc8f053fef270d deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:22 [info]: Insurance record 6a398c12b2fc8f053fef270c deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:28 [info]: Insurance record 6a398c12b2fc8f053fef270b deleted by cmuteti@novapioneer.com
+2026-06-22 22:44:56 [info]: Insurance record 6a398c12b2fc8f053fef270a deleted by cmuteti@novapioneer.com
+2026-06-22 22:45:26 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-22 22:50:50 [info]: MongoDB connected successfully.
+2026-06-22 22:50:53 [info]: SAIT API server running on port 5000 [development]
+2026-06-22 22:56:25 [info]: MongoDB connected successfully.
+2026-06-22 22:56:28 [info]: SAIT API server running on port 5000 [development]
+2026-06-23 05:59:13 [error]: MongoServerSelectionError: connect ECONNABORTED 34.80.66.198:27017
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-23 05:59:32 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-02.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+    at async model.Query._findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:2773:15)
+    at async maybeTracedQueryExec (C:\Users\Novaneer\Desktop\backend\node_modules\mongoose\lib\query.js:4801:65)
+2026-06-23 18:41:37 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-26 16:56:03 [info]: MongoDB connected successfully.
+2026-06-26 16:56:06 [info]: SAIT API server running on port 5000 [development]
+2026-06-26 16:56:14 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-06-29 09:56:09 [info]: MongoDB connected successfully.
+2026-06-29 09:56:11 [info]: SAIT API server running on port 5000 [development]
+2026-06-29 09:58:11 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-01 13:58:42 [info]: MongoDB connected successfully.
+2026-07-01 13:58:44 [info]: SAIT API server running on port 5000 [development]
+2026-07-01 14:00:40 [info]: MongoDB connected successfully.
+2026-07-01 14:00:42 [info]: SAIT API server running on port 5000 [development]
+2026-07-01 14:02:11 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-01 14:05:29 [info]: MongoDB connected successfully.
+2026-07-01 14:05:31 [info]: SAIT API server running on port 5000 [development]
+2026-07-01 23:50:50 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-02 00:02:40 [info]: MongoDB connected successfully.
+2026-07-02 00:02:42 [info]: SAIT API server running on port 5000 [development]
+2026-07-02 00:05:50 [info]: Asset created: AST-00015 by cmuteti@novapioneer.com
+2026-07-02 00:09:26 [info]: MongoDB connected successfully.
+2026-07-02 00:09:28 [info]: SAIT API server running on port 5000 [development]
+2026-07-02 15:44:00 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-00.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+2026-07-03 13:08:07 [error]: MongoDB connection failed:
+2026-07-03 13:10:02 [error]: MongoDB connection failed:
+2026-07-03 13:10:48 [error]: MongoDB connection failed:
+2026-07-03 13:31:10 [error]: MongoDB connection failed:
+2026-07-03 13:38:01 [error]: MongoDB connection failed:
+2026-07-03 13:50:59 [error]: MongoDB connection failed:
+2026-07-03 14:02:08 [error]: MongoDB connection failed:
+2026-07-03 14:03:20 [info]: MongoDB connected successfully.
+2026-07-03 14:03:22 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 14:04:17 [info]: MongoDB connected successfully.
+2026-07-03 14:04:19 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 14:05:05 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 14:12:07 [info]: MongoDB connected successfully.
+2026-07-03 14:12:07 [info]: MongoDB connected successfully.
+2026-07-03 14:12:10 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 14:12:10 [info]: SAIT API server running on port 5000 [development]

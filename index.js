@@ -1,3 +1,7 @@
+// Force Node's DNS resolver to use Google DNS — fixes SRV lookup failures on some networks
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');

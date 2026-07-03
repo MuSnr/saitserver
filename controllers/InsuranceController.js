@@ -44,14 +44,18 @@ const createRecord = async (req, res) => {
       size:         f.size,
     }));
 
+    const annualPremiumVal = Number(req.body.december2025Premium) || Number(req.body.annualPremium) || 0;
+
     const record = await InsuranceRecord.create({
       ...req.body,
-      sumInsured:          Number(req.body.sumInsured)          || 0,
-      monthlyPremium:      Number(req.body.monthlyPremium)      || 0,
-      unitCost:            Number(req.body.unitCost)            || 0,
-      quantity:            Number(req.body.quantity)            || 1,
-      rate:                Number(req.body.rate)                || 0,
-      december2025Premium: Number(req.body.december2025Premium) || 0,
+      sumInsured:          Number(req.body.sumInsured)     || 0,
+      monthlyPremium:      Number(req.body.monthlyPremium) || 0,
+      unitCost:            Number(req.body.unitCost)       || 0,
+      quantity:            Number(req.body.quantity)       || 1,
+      rate:                Number(req.body.rate)           || 0,
+      annualPremium:       annualPremiumVal,
+      premiumYear:         Number(req.body.premiumYear)    || new Date().getFullYear(),
+      december2025Premium: annualPremiumVal,   // keep legacy field in sync
       documents,
       createdBy: req.user._id,
     });
@@ -88,9 +92,20 @@ const updateRecord = async (req, res) => {
 
     const prevStatus = existing.status;
 
+    // Keep annualPremium and december2025Premium in sync
+    const updates = { ...req.body, updatedBy: req.user._id };
+    if (req.body.december2025Premium !== undefined || req.body.annualPremium !== undefined) {
+      const val = Number(req.body.december2025Premium ?? req.body.annualPremium) || 0;
+      updates.annualPremium       = val;
+      updates.december2025Premium = val;
+    }
+    if (req.body.premiumYear) {
+      updates.premiumYear = Number(req.body.premiumYear);
+    }
+
     const updated = await InsuranceRecord.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedBy: req.user._id },
+      updates,
       { new: true, runValidators: true }
     ).populate('linkedAssetId', 'assetId description insuranceStatus sumInsured serialNumber');
 

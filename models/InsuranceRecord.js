@@ -21,6 +21,10 @@ const insuranceRecordSchema = new mongoose.Schema(
     sumInsured: { type: Number, required: true, min: 0 },
     monthlyPremium: { type: Number, default: 0 },
     rate: { type: Number, default: 0 },
+    // Dynamic annual premium — year is stored alongside the value
+    annualPremium: { type: Number, default: 0 },
+    premiumYear: { type: Number, default: () => new Date().getFullYear() },
+    // Legacy field kept for backwards compat — mirrors annualPremium
     december2025Premium: { type: Number, default: 0 },
     interestNoted: { type: String, default: '' },
     vendor: { type: String, default: '' },
