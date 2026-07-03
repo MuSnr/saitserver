@@ -1242,3 +1242,24 @@
 2026-07-03 14:12:07 [info]: MongoDB connected successfully.
 2026-07-03 14:12:10 [info]: SAIT API server running on port 5000 [development]
 2026-07-03 14:12:10 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 14:31:27 [info]: MongoDB connected successfully.
+2026-07-03 14:31:29 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 14:31:59 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 15:30:16 [error]: MongoServerSelectionError: getaddrinfo ENOTFOUND ac-rp5bqyz-shard-00-00.gdck9x2.mongodb.net
+    at Topology.selectServer (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\sdam\topology.js:348:38)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processTimers (node:internal/timers:538:9)
+    at async executeOperationWithRetries (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:157:18)
+    at async executeOperation (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\operations\execute_operation.js:83:16)
+    at async FindCursor._initialize (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\find_cursor.js:62:26)
+    at async FindCursor.cursorInit (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:620:27)
+    at async FindCursor.fetchBatch (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:654:13)
+    at async FindCursor.next (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\cursor\abstract_cursor.js:326:17)
+    at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
+2026-07-03 15:45:37 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 15:50:40 [info]: MongoDB connected successfully.
+2026-07-03 15:50:40 [info]: MongoDB connected successfully.
+2026-07-03 15:50:41 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 15:50:42 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 15:51:24 [info]: MongoDB connected successfully.
+2026-07-03 15:51:26 [info]: SAIT API server running on port 5000 [development]

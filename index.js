@@ -1,6 +1,9 @@
 // Force Node's DNS resolver to use Google DNS — fixes SRV lookup failures on some networks
+// Only applied locally; Vercel's serverless environment handles DNS natively
 const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+if (process.env.NODE_ENV !== 'production') {
+  dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+}
 
 const express = require('express');
 const mongoose = require('mongoose');
