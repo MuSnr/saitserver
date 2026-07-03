@@ -67,6 +67,29 @@ app.use('/api/', apiLimiter);
 // ── Static uploads ────────────────────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ── Health check (no DB required) ────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'SAIT API is running.',
+    version: '2.0.0',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    env: {
+      NODE_ENV: process.env.NODE_ENV || 'missing',
+      MONGO_URI: process.env.MONGO_URI ? 'set' : 'MISSING',
+      JWT_SECRET: process.env.JWT_SECRET ? 'set' : 'MISSING',
+      ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'missing',
+    },
+  });
+});
+
 // ── MongoDB lazy connection ───────────────────────────────────────────────────
 // Cached across serverless invocations (Vercel reuses warm instances)
 let isConnected = false;
@@ -102,23 +125,6 @@ app.use(async (req, res, next) => {
     logger.error('MongoDB connection failed:', err.message);
     res.status(503).json({ success: false, message: 'Database unavailable.' });
   }
-});
-
-// ── Health check ──────────────────────────────────────────────────────────────
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'SAIT API is running.',
-    version: '2.0.0',
-    timestamp: new Date().toISOString(),
-  });
-});
-
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-  });
 });
 
 // ── API Routes ────────────────────────────────────────────────────────────────
