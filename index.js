@@ -40,7 +40,6 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,ht
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, Postman, etc.)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
       callback(new Error(`CORS: Origin ${origin} not allowed.`));
@@ -58,9 +57,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // ── HTTP request logging ──────────────────────────────────────────────────────
 app.use(
   morgan('combined', {
-    stream: {
-      write: (msg) => logger.http(msg.trim()),
-    },
+    stream: { write: (msg) => logger.http(msg.trim()) },
   })
 );
 
@@ -69,6 +66,43 @@ app.use('/api/', apiLimiter);
 
 // ── Static uploads ────────────────────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// ── MongoDB lazy connection ───────────────────────────────────────────────────
+// Cached across serverless invocations (Vercel reuses warm instances)
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected && mongoose.connection.readyState === 1) return;
+  await mongoose.connect(process.env.MONGO_URI);
+  isConnected = true;
+  logger.info('MongoDB connected successfully.');
+
+  // Seed default campuses if none exist
+  const Campus = require('./models/Campus');
+  const count = await Campus.countDocuments();
+  if (count === 0) {
+    const defaults = [
+      { name: 'Ruimsig',      shortName: 'NPR', initials: 'NPR' },
+      { name: 'Paulshof',     shortName: 'NPP', initials: 'NPP' },
+      { name: 'Midrand',      shortName: 'NPM', initials: 'NPM' },
+      { name: 'Boksburg',     shortName: 'NPB', initials: 'NPB' },
+      { name: 'North Riding', shortName: 'NPN', initials: 'NPN' },
+    ];
+    await Campus.insertMany(defaults);
+    logger.info('Default campuses seeded.');
+  }
+};
+
+// Middleware to ensure DB is connected before any request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    logger.error('MongoDB connection failed:', err.message);
+    res.status(503).json({ success: false, message: 'Database unavailable.' });
+  }
+});
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
@@ -108,52 +142,32 @@ app.use((req, res) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   logger.error('Unhandled error:', err);
-
-  // Multer file type error
   if (err.message === 'Unsupported file type') {
     return res.status(400).json({ success: false, message: err.message });
   }
-  // CORS error
   if (err.message && err.message.startsWith('CORS')) {
     return res.status(403).json({ success: false, message: err.message });
   }
-
   res.status(err.statusCode || 500).json({
     success: false,
     message: process.env.NODE_ENV === 'production' ? 'Internal server error.' : err.message,
   });
 });
 
-// ── Database & Server start ───────────────────────────────────────────────────
-const PORT = process.env.PORT || 3000;
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(async () => {
-    logger.info('MongoDB connected successfully.');
-
-    // Seed default campuses if none exist
-    const Campus = require('./models/Campus');
-    const count = await Campus.countDocuments();
-    if (count === 0) {
-      const defaults = [
-        { name: 'Ruimsig',      shortName: 'NPR', initials: 'NPR' },
-        { name: 'Paulshof',     shortName: 'NPP', initials: 'NPP' },
-        { name: 'Midrand',      shortName: 'NPM', initials: 'NPM' },
-        { name: 'Boksburg',     shortName: 'NPB', initials: 'NPB' },
-        { name: 'North Riding', shortName: 'NPN', initials: 'NPN' },
-      ];
-      await Campus.insertMany(defaults);
-      logger.info('Default campuses seeded.');
-    }
-
-    app.listen(PORT, () => {
-      logger.info(`SAIT API server running on port ${PORT} [${process.env.NODE_ENV || 'development'}]`);
+// ── Local dev server (not used on Vercel) ─────────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        logger.info(`SAIT API server running on port ${PORT} [development]`);
+      });
+    })
+    .catch((err) => {
+      logger.error('Startup failed:', err.message);
+      process.exit(1);
     });
-  })
-  .catch((err) => {
-    logger.error('MongoDB connection failed:', err.message);
-    process.exit(1);
-  });
+}
 
+// Vercel picks this up as the serverless handler
 module.exports = app;
