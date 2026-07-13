@@ -16,6 +16,7 @@ const path = require('path');
 dotenv.config();
 
 const logger = require('./services/logger');
+const { seedKenyaCampuses } = require('./services/regionService');
 const { apiLimiter } = require('./middleware/rateLimiter');
 
 // Routes
@@ -29,6 +30,7 @@ const campusRoutes = require('./routes/campusRoutes');
 const subCampusRoutes = require('./routes/subCampusRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const reconciliationRoutes = require('./routes/reconciliationRoutes');
+const incidentRoutes = require('./routes/incidentRoutes');
 
 const app = express();
 
@@ -100,19 +102,42 @@ const connectDB = async () => {
   isConnected = true;
   logger.info('MongoDB connected successfully.');
 
-  // Seed default campuses if none exist
+  // Seed default SA campuses if none exist
   const Campus = require('./models/Campus');
   const count = await Campus.countDocuments();
   if (count === 0) {
     const defaults = [
-      { name: 'Ruimsig',      shortName: 'NPR', initials: 'NPR' },
-      { name: 'Paulshof',     shortName: 'NPP', initials: 'NPP' },
-      { name: 'Midrand',      shortName: 'NPM', initials: 'NPM' },
-      { name: 'Boksburg',     shortName: 'NPB', initials: 'NPB' },
-      { name: 'North Riding', shortName: 'NPN', initials: 'NPN' },
+      { name: 'Ruimsig',      shortName: 'NPR', initials: 'NPR', region: 'South Africa' },
+      { name: 'Paulshof',     shortName: 'NPP', initials: 'NPP', region: 'South Africa' },
+      { name: 'Midrand',      shortName: 'NPM', initials: 'NPM', region: 'South Africa' },
+      { name: 'Boksburg',     shortName: 'NPB', initials: 'NPB', region: 'South Africa' },
+      { name: 'North Riding', shortName: 'NPN', initials: 'NPN', region: 'South Africa' },
     ];
     await Campus.insertMany(defaults);
-    logger.info('Default campuses seeded.');
+    logger.info('Default SA campuses seeded.');
+  }
+
+  // Seed Kenya campuses (idempotent upsert)
+  await seedKenyaCampuses();
+
+  // One-time migration: 'Pending' → 'Internal WIP' for legacy claims
+  const Claim = require('./models/Claim');
+  const migrated = await Claim.updateMany(
+    { claimStatus: 'Pending' },
+    { $set: { claimStatus: 'Internal WIP' } }
+  );
+  if (migrated.modifiedCount > 0) {
+    logger.info(`Migrated ${migrated.modifiedCount} claims: Pending → Internal WIP`);
+  }
+
+  // One-time migration: set region = 'South Africa' for users with empty region
+  const User = require('./models/User');
+  const userMigrated = await User.updateMany(
+    { region: { $in: ['', null, undefined] } },
+    { $set: { region: 'South Africa' } }
+  );
+  if (userMigrated.modifiedCount > 0) {
+    logger.info(`Migrated ${userMigrated.modifiedCount} users: empty region → South Africa`);
   }
 };
 
@@ -138,6 +163,7 @@ app.use('/api/campuses', campusRoutes);
 app.use('/api/sub-campuses', subCampusRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/reconciliation', reconciliationRoutes);
+app.use('/api/incidents', incidentRoutes);
 
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {

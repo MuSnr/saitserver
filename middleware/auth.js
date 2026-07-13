@@ -46,12 +46,15 @@ const protect = async (req, res, next) => {
 /**
  * RBAC — allow only specified roles
  * Usage: authorize('admin', 'campus_manager')
+ * Note: super_admin is always permitted regardless of roles listed.
  */
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({ success: false, message: 'Not authenticated.' });
     }
+    // super_admin bypasses all role restrictions
+    if (req.user.role === 'super_admin') return next();
     if (!roles.includes(req.user.role)) {
       logger.warn(
         `RBAC denied: user ${req.user.email} (role: ${req.user.role}) tried to access route requiring [${roles.join(', ')}]`
@@ -61,7 +64,7 @@ const authorize = (...roles) => {
         message: `Access denied. Required role: ${roles.join(' or ')}.`,
       });
     }
-    next(); // ← was commented out — this caused all role-protected routes to hang
+    next();
   };
 };
 

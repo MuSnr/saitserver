@@ -7,10 +7,14 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     role: {
       type: String,
-      enum: ['admin', 'campus_manager', 'viewer'],
+      enum: ['super_admin', 'admin', 'campus_manager', 'viewer'],
       default: 'viewer',
     },
-    region: { type: String, default: '' },
+    region: {
+      type: String,
+      enum: ['South Africa', 'Kenya'],
+      default: 'South Africa',
+    },
     campus: { type: String, default: '' },
     status: {
       type: String,
@@ -24,6 +28,7 @@ const userSchema = new mongoose.Schema(
     verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     verifiedAt: { type: Date, default: null },
     lastLogin: { type: Date, default: null },
+    unreadNotifications: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

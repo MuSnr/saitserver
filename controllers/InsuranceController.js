@@ -7,14 +7,12 @@ const {
   unlinkAsset,
   findMatchingAsset,
 } = require('../services/reconciliationService');
+const { getRegionFilter, getCampusRegion } = require('../services/regionService');
 
 // ── GET /api/insurance-register ───────────────────────────────────────────────
 const getRecords = async (req, res) => {
   try {
-    const filter = {};
-    if (req.user.role === 'campus_manager' && req.user.campus) {
-      filter.subsidiary = req.user.campus;
-    }
+    const filter = await getRegionFilter(req.user);
     const records = await InsuranceRecord.find(filter)
       .populate('createdBy', 'name email')
       .populate('linkedAssetId', 'assetId description insuranceStatus sumInsured serialNumber')
@@ -34,6 +32,15 @@ const createRecord = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Subsidiary, class and sum insured are required.',
+      });
+    }
+
+    // Kenya requires document_link (invoice/PR reference)
+    const campusRegion = await getCampusRegion(subsidiary);
+    if (campusRegion === 'Kenya' && !req.body.document_link) {
+      return res.status(422).json({
+        success: false,
+        message: 'document_link (invoice or PR reference) is required for Kenya records.',
       });
     }
 
@@ -101,6 +108,16 @@ const updateRecord = async (req, res) => {
     }
     if (req.body.premiumYear) {
       updates.premiumYear = Number(req.body.premiumYear);
+    }
+
+    // For Kenya records: sum_insured is locked to linked asset's total_cost
+    // Always re-sync when admin saves so it stays consistent
+    if (existing.linkedAssetId) {
+      const Asset = require('../models/Asset');
+      const linkedAsset = await Asset.findById(existing.linkedAssetId).select('sumInsured').lean();
+      if (linkedAsset && linkedAsset.sumInsured !== undefined) {
+        updates.sumInsured = linkedAsset.sumInsured;
+      }
     }
 
     const updated = await InsuranceRecord.findByIdAndUpdate(

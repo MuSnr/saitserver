@@ -1284,3 +1284,224 @@
 2026-07-03 16:05:22 [info]: MongoDB connected successfully.
 2026-07-03 16:05:23 [info]: SAIT API server running on port 5000 [development]
 2026-07-03 16:06:57 [info]: Asset created: AST-00016 by cmuteti@novapioneer.com
+2026-07-03 16:10:01 [info]: MongoDB connected successfully.
+2026-07-03 16:10:02 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 16:25:05 [info]: MongoDB connected successfully.
+2026-07-03 16:25:08 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 16:31:16 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 17:51:59 [info]: MongoDB connected successfully.
+2026-07-03 17:52:02 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:52:08 [info]: MongoDB connected successfully.
+2026-07-03 17:52:10 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:52:28 [info]: MongoDB connected successfully.
+2026-07-03 17:52:31 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:52:36 [info]: MongoDB connected successfully.
+2026-07-03 17:52:39 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:52:45 [info]: MongoDB connected successfully.
+2026-07-03 17:52:47 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:52:55 [info]: MongoDB connected successfully.
+2026-07-03 17:52:57 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:53:04 [info]: MongoDB connected successfully.
+2026-07-03 17:53:07 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 17:53:14 [info]: MongoDB connected successfully.
+2026-07-03 17:53:16 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:00:29 [info]: MongoDB connected successfully.
+2026-07-03 18:00:31 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:00:50 [info]: MongoDB connected successfully.
+2026-07-03 18:00:53 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:01:03 [info]: MongoDB connected successfully.
+2026-07-03 18:01:05 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:09:29 [info]: User logged in: muteticaleb@zetech.ac.ke (role: campus_manager)
+2026-07-03 18:10:09 [info]: Asset created: AST-00018 by muteticaleb@zetech.ac.ke
+2026-07-03 18:10:09 [info]: Auto-created InsuranceRecord 6a47d0d1942f0d0843c80b8a (Pending Review) for Asset AST-00018
+2026-07-03 18:10:25 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 18:15:12 [info]: MongoDB connected successfully.
+2026-07-03 18:15:14 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:15:19 [info]: MongoDB connected successfully.
+2026-07-03 18:15:21 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:15:46 [info]: MongoDB connected successfully.
+2026-07-03 18:15:49 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:15:53 [info]: MongoDB connected successfully.
+2026-07-03 18:15:54 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:16:01 [info]: MongoDB connected successfully.
+2026-07-03 18:16:03 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:19:25 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-03 18:22:02 [info]: User 6a47d33fc125e3dd1c3140b8 (calebmuteti4@gmail.com) deleted by admin cmuteti@novapioneer.com
+2026-07-03 18:22:28 [info]: Invite email sent to calebmuteti4@gmail.com
+2026-07-03 18:22:28 [info]: Admin cmuteti@novapioneer.com invited user: calebmuteti4@gmail.com
+2026-07-03 18:24:02 [info]: MongoDB connected successfully.
+2026-07-03 18:24:05 [info]: SAIT API server running on port 5000 [development]
+2026-07-03 18:26:50 [info]: User 6a47d3adc125e3dd1c3140b9 (calebmuteti4@gmail.com) deleted by admin cmuteti@novapioneer.com
+2026-07-03 18:27:09 [info]: Admin cmuteti@novapioneer.com invited user: calebmuteti4@gmail.com
+2026-07-03 18:29:36 [info]: Invite email sent to calebmuteti4@gmail.com
+2026-07-03 19:29:16 [info]: MongoDB connected successfully.
+2026-07-03 19:33:11 [info]: MongoDB connected successfully.
+2026-07-03 19:48:03 [info]: MongoDB connected successfully.
+2026-07-03 20:25:39 [error]: MongoDB connection failed:
+2026-07-03 20:25:39 [error]: MongoDB connection failed:
+2026-07-05 21:18:49 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-06 11:16:38 [info]: MongoDB connected successfully.
+2026-07-06 11:16:41 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:16:48 [info]: MongoDB connected successfully.
+2026-07-06 11:16:49 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:17:06 [info]: MongoDB connected successfully.
+2026-07-06 11:17:09 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:30:28 [info]: MongoDB connected successfully.
+2026-07-06 11:30:30 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:30:43 [info]: MongoDB connected successfully.
+2026-07-06 11:30:45 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:31:03 [info]: MongoDB connected successfully.
+2026-07-06 11:31:06 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:31:29 [info]: MongoDB connected successfully.
+2026-07-06 11:31:31 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:35:25 [info]: MongoDB connected successfully.
+2026-07-06 11:35:28 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:35:42 [info]: MongoDB connected successfully.
+2026-07-06 11:35:43 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:36:06 [info]: MongoDB connected successfully.
+2026-07-06 11:36:09 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:36:25 [info]: MongoDB connected successfully.
+2026-07-06 11:36:26 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:36:37 [info]: MongoDB connected successfully.
+2026-07-06 11:36:38 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 11:42:30 [info]: MongoDB connected successfully.
+2026-07-06 11:42:36 [info]: Kenya campuses seeded.
+2026-07-06 11:42:37 [info]: Migrated 1 claims: Pending → Internal WIP
+2026-07-06 11:42:37 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 13:43:25 [info]: MongoDB connected successfully.
+2026-07-06 13:43:30 [info]: Kenya campuses seeded.
+2026-07-06 13:43:30 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 13:44:18 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-06 14:31:25 [info]: MongoDB connected successfully.
+2026-07-06 14:31:28 [info]: Kenya campuses seeded.
+2026-07-06 14:41:47 [info]: MongoDB connected successfully.
+2026-07-06 14:41:50 [info]: Kenya campuses seeded.
+2026-07-06 21:17:26 [info]: MongoDB connected successfully.
+2026-07-06 21:17:37 [info]: MongoDB connected successfully.
+2026-07-06 21:17:42 [info]: Kenya campuses seeded.
+2026-07-06 21:17:42 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:17:50 [info]: MongoDB connected successfully.
+2026-07-06 21:17:56 [info]: Kenya campuses seeded.
+2026-07-06 21:17:57 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:18:06 [info]: MongoDB connected successfully.
+2026-07-06 21:18:13 [info]: Kenya campuses seeded.
+2026-07-06 21:18:13 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:21:29 [info]: MongoDB connected successfully.
+2026-07-06 21:21:35 [info]: Kenya campuses seeded.
+2026-07-06 21:21:35 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:22:04 [info]: MongoDB connected successfully.
+2026-07-06 21:22:09 [info]: Kenya campuses seeded.
+2026-07-06 21:22:09 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:22:24 [info]: MongoDB connected successfully.
+2026-07-06 21:22:30 [info]: Kenya campuses seeded.
+2026-07-06 21:22:31 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:22:52 [info]: MongoDB connected successfully.
+2026-07-06 21:22:59 [info]: Kenya campuses seeded.
+2026-07-06 21:22:59 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:25:38 [info]: MongoDB connected successfully.
+2026-07-06 21:25:43 [info]: Kenya campuses seeded.
+2026-07-06 21:25:43 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:33:02 [info]: MongoDB connected successfully.
+2026-07-06 21:33:08 [info]: Kenya campuses seeded.
+2026-07-06 21:33:09 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:35:59 [info]: MongoDB connected successfully.
+2026-07-06 21:36:07 [info]: Kenya campuses seeded.
+2026-07-06 21:36:07 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 21:36:17 [info]: MongoDB connected successfully.
+2026-07-06 21:36:24 [info]: Kenya campuses seeded.
+2026-07-06 21:36:24 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:05:16 [info]: MongoDB connected successfully.
+2026-07-06 22:05:23 [info]: Kenya campuses seeded.
+2026-07-06 22:05:24 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:05:30 [info]: MongoDB connected successfully.
+2026-07-06 22:05:36 [info]: Kenya campuses seeded.
+2026-07-06 22:05:36 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:05:48 [info]: MongoDB connected successfully.
+2026-07-06 22:05:54 [info]: Kenya campuses seeded.
+2026-07-06 22:05:55 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:06:01 [info]: MongoDB connected successfully.
+2026-07-06 22:06:08 [info]: Kenya campuses seeded.
+2026-07-06 22:06:09 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:06:41 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-06 22:11:11 [info]: MongoDB connected successfully.
+2026-07-06 22:11:16 [info]: Kenya campuses seeded.
+2026-07-06 22:11:17 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:16:24 [info]: MongoDB connected successfully.
+2026-07-06 22:16:30 [info]: Kenya campuses seeded.
+2026-07-06 22:16:30 [info]: SAIT API server running on port 5000 [development]
+2026-07-06 22:34:06 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-06 22:35:33 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-06 22:36:09 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-06 22:45:41 [info]: MongoDB connected successfully.
+2026-07-06 22:45:45 [info]: Kenya campuses seeded.
+2026-07-06 23:42:58 [info]: MongoDB connected successfully.
+2026-07-06 23:43:03 [info]: Kenya campuses seeded.
+2026-07-06 23:43:04 [info]: SAIT API server running on port 5000 [development]
+2026-07-07 09:08:53 [info]: User 6a47d4cd114f7624c2759e4a updated by cmuteti@novapioneer.com
+2026-07-07 09:09:49 [warn]: Failed login attempt for calebmuteti4@gmail.com
+2026-07-07 09:10:10 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-07 09:11:28 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-07 09:17:22 [info]: MongoDB connected successfully.
+2026-07-07 09:17:25 [info]: Kenya campuses seeded.
+2026-07-12 00:52:31 [info]: MongoDB connected successfully.
+2026-07-12 00:52:35 [info]: Kenya campuses seeded.
+2026-07-12 00:52:35 [info]: SAIT API server running on port 5000 [development]
+2026-07-12 00:52:37 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-12 00:52:56 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-12 00:53:28 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-12 00:54:40 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-12 01:32:16 [info]: MongoDB connected successfully.
+2026-07-12 01:32:21 [info]: Kenya campuses seeded.
+2026-07-12 01:32:21 [info]: SAIT API server running on port 5000 [development]
+2026-07-12 20:31:31 [info]: MongoDB connected successfully.
+2026-07-12 20:31:35 [info]: Kenya campuses seeded.
+2026-07-12 20:31:36 [info]: SAIT API server running on port 5000 [development]
+2026-07-12 21:04:39 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-12 21:05:02 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-12 21:06:18 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-12 21:06:47 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-12 21:11:18 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-12 21:12:19 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-12 21:27:03 [info]: Incident created: INC-2026-001 by cmuteti@novapioneer.com
+2026-07-13 01:17:47 [info]: MongoDB connected successfully.
+2026-07-13 01:17:50 [info]: Kenya campuses seeded.
+2026-07-13 09:12:51 [info]: MongoDB connected successfully.
+2026-07-13 09:12:54 [info]: Kenya campuses seeded.
+2026-07-13 10:17:14 [info]: Incident INC-2026-001 deleted by cmuteti@novapioneer.com
+2026-07-13 10:17:24 [info]: Incident created: INC-2026-001 by cmuteti@novapioneer.com
+2026-07-13 10:17:37 [info]: Incident INC-2026-001 deleted by cmuteti@novapioneer.com
+2026-07-13 11:14:24 [info]: User logged in: qode.current@gmail.com (role: admin)
+2026-07-13 11:30:39 [info]: Claim created: C008 by qode.current@gmail.com
+2026-07-13 11:33:19 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-13 12:58:57 [info]: MongoDB connected successfully.
+2026-07-13 12:59:00 [info]: Kenya campuses seeded.
+2026-07-13 13:42:16 [info]: MongoDB connected successfully.
+2026-07-13 13:42:18 [info]: Kenya campuses seeded.
+2026-07-13 13:43:42 [info]: User 6a2ab11b316597599cff3374 updated by cmuteti@novapioneer.com
+2026-07-13 13:50:51 [info]: MongoDB connected successfully.
+2026-07-13 13:50:54 [info]: Kenya campuses seeded.
+2026-07-13 14:32:36 [info]: MongoDB connected successfully.
+2026-07-13 14:32:40 [info]: Kenya campuses seeded.
+2026-07-13 15:56:15 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-13 16:16:40 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-13 16:23:00 [info]: Incident created: INC-2026-001 by cmuteti@novapioneer.com
+2026-07-13 16:23:35 [info]: Incident INC-2026-001 deleted by cmuteti@novapioneer.com
+2026-07-13 16:25:39 [info]: Campus Test Campus deleted by cmuteti@novapioneer.com
+2026-07-13 16:30:21 [info]: Incident created: INC-2026-001 by cmuteti@novapioneer.com
+2026-07-13 16:30:42 [info]: Incident INC-2026-001 deleted by cmuteti@novapioneer.com
+2026-07-13 16:48:19 [info]: MongoDB connected successfully.
+2026-07-13 16:48:23 [info]: Kenya campuses seeded.
+2026-07-13 18:22:10 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-13 18:22:28 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-13 18:25:05 [info]: User logged in: cmuteti@novapioneer.com (role: admin)
+2026-07-13 18:39:18 [info]: User logged in: cmuteti@novapioneer.com (role: super_admin)
+2026-07-13 18:40:51 [info]: User logged in: cmuteti@novapioneer.com (role: super_admin)
+2026-07-13 18:43:29 [info]: User 6a4c136d982377aeb2e58b9c (superadmin@novapioneer.com) deleted by admin cmuteti@novapioneer.com
+2026-07-13 18:43:48 [info]: User logged in: calebmuteti4@gmail.com (role: admin)
+2026-07-13 18:44:57 [info]: User logged in: cmuteti@novapioneer.com (role: super_admin)
+2026-07-13 18:45:25 [info]: User 6a2baa6f6117e321f7a57ff3 updated by cmuteti@novapioneer.com
+2026-07-13 18:46:57 [info]: User 6a47d4cd114f7624c2759e4a (calebmuteti4@gmail.com) deleted by admin cmuteti@novapioneer.com
+2026-07-13 18:47:38 [info]: Admin cmuteti@novapioneer.com invited user: calebmuteti4@gmail.com
+2026-07-13 18:49:44 [info]: Invite email sent to calebmuteti4@gmail.com
+2026-07-13 18:50:02 [info]: User logged in: muteticaleb@zetech.ac.ke (role: campus_manager)
+2026-07-13 18:52:14 [info]: User logged in: calebmuteti4@gmail.com (role: admin)

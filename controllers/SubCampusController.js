@@ -6,8 +6,27 @@ const logger = require('../services/logger');
 // GET /api/sub-campuses?campus=  — sub-campuses for a specific campus
 const getSubCampuses = async (req, res) => {
   try {
+    const user = req.user;
     const filter = {};
-    if (req.query.campus) filter.campus = req.query.campus;
+
+    if (req.query.campus) {
+      // Specific campus requested — respect it (already scoped)
+      filter.campus = req.query.campus;
+    } else if (user.role !== 'super_admin') {
+      // Scope to campuses in this user's region only
+      const region = user.role === 'campus_manager'
+        ? null  // handled below
+        : (user.region || 'South Africa');
+
+      if (user.role === 'campus_manager' && user.campus) {
+        // campus_manager: only sub-campuses of their own campus
+        const parentCampus = await Campus.findOne({ name: user.campus }).select('_id').lean();
+        if (parentCampus) filter.campus = parentCampus._id;
+      } else if (region) {
+        const regionCampuses = await Campus.find({ region }).select('_id').lean();
+        filter.campus = { $in: regionCampuses.map((c) => c._id) };
+      }
+    }
 
     const subCampuses = await SubCampus.find(filter)
       .populate('campus', 'name shortName')

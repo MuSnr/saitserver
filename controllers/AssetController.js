@@ -1,11 +1,14 @@
 const Asset = require('../models/Asset');
 const logger = require('../services/logger');
 const {
-  autoLinkAsset,
+  autoCreateInsuranceRecord,
+  mirrorFieldsToInsuranceRecord,
   propagateAssetStatusToInsurance,
   onAssetDeleted,
   unlinkAsset,
+  keAutoSync,
 } = require('../services/reconciliationService');
+const { getCampusRegion } = require('../services/regionService');
 
 // ── GET /api/assets ───────────────────────────────────────────────────────────
 const getAssets = async (req, res) => {
@@ -57,6 +60,10 @@ const createAsset = async (req, res) => {
       subsidiary, insuranceClass, description,
       serialNumber, gradeLocation, quantity, unitPrice,
       isDuplicate, duplicateNote, subLocation, insuranceStatus, year, notes,
+      // Kenya campus-manager fields
+      row_ref, asset_name, physical_location, procuring_department,
+      year_of_purchase, years_of_service, age_bracket, asset_class,
+      document_link, pr_ref,
     } = req.body;
 
     if (!subsidiary || !insuranceClass || !description || !unitPrice) {
@@ -80,13 +87,32 @@ const createAsset = async (req, res) => {
       insuranceStatus: insuranceStatus || '',
       year:          Number(year) || new Date().getFullYear(),
       notes:         notes || '',
+      // Kenya manager fields
+      row_ref:              row_ref              || '',
+      asset_name:           asset_name           || description || '',
+      physical_location:    physical_location    || '',
+      procuring_department: procuring_department || '',
+      year_of_purchase:     year_of_purchase     ? Number(year_of_purchase) : null,
+      years_of_service:     years_of_service     ? Number(years_of_service) : null,
+      age_bracket:          age_bracket          || '',
+      asset_class:          asset_class          || '',
+      document_link:        document_link        || '',
+      pr_ref:               pr_ref               || '',
       createdBy:     req.user._id,
     });
 
-    // Attempt to auto-link to matching insurance record (non-blocking)
-    autoLinkAsset(asset).catch((e) =>
-      logger.warn(`Auto-link failed for Asset ${asset.assetId}: ${e.message}`)
-    );
+    // Route to correct auto-sync based on campus region (fire-and-forget)
+    getCampusRegion(asset.subsidiary).then((region) => {
+      if (region === 'Kenya') {
+        keAutoSync(asset, req.user._id).catch((e) =>
+          logger.warn(`KE auto-sync failed for Asset ${asset.assetId}: ${e.message}`)
+        );
+      } else {
+        autoCreateInsuranceRecord(asset, req.user._id).catch((e) =>
+          logger.warn(`SA auto-sync failed for Asset ${asset.assetId}: ${e.message}`)
+        );
+      }
+    }).catch((e) => logger.warn(`getCampusRegion failed for ${asset.assetId}: ${e.message}`));
 
     logger.info(`Asset created: ${asset.assetId} by ${req.user.email}`);
 
@@ -108,6 +134,22 @@ const updateAsset = async (req, res) => {
     if (!existing) return res.status(404).json({ success: false, message: 'Asset not found.' });
 
     const prevStatus = existing.insuranceStatus;
+
+    // RBAC: campus_manager cannot modify Insurance Register admin fields
+    // These fields live on InsuranceRecord and are admin-only
+    if (req.user.role === 'campus_manager') {
+      const ADMIN_ONLY_FIELDS = [
+        'is_insured', 'uninsured_flag', 'quantity_insured', 'status_detail',
+        'comments', 'annualPremium', 'insurance_priority', 'insurable_value',
+        'retire_write_off_date', 'quantity_retired', 'retired_asset_value',
+        'asset_usage_status', 'ownership', 'insuranceStatus',
+      ];
+      for (const field of ADMIN_ONLY_FIELDS) {
+        if (req.body[field] !== undefined) {
+          delete req.body[field];
+        }
+      }
+    }
 
     // Recompute sumInsured if price/qty changed
     if (req.body.unitPrice !== undefined || req.body.quantity !== undefined) {
@@ -144,6 +186,13 @@ const updateAsset = async (req, res) => {
     // If the link was manually cleared, unlink properly
     if (req.body.linkedInsuranceRecordId === null && existing.linkedInsuranceRecordId) {
       await unlinkAsset(asset._id);
+    }
+
+    // Mirror updated mirrored fields to linked InsuranceRecord (non-blocking)
+    if (asset.linkedInsuranceRecordId) {
+      mirrorFieldsToInsuranceRecord(asset._id, req.body).catch((e) =>
+        logger.warn(`Field mirror failed for Asset ${asset.assetId}: ${e.message}`)
+      );
     }
 
     logger.info(`Asset ${asset.assetId} updated by ${req.user.email}`);

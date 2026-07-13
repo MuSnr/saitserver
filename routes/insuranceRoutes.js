@@ -17,9 +17,9 @@ const upload = multer({
 
 router.get('/',          protect, getRecords);
 router.get('/template',  protect, downloadInsuranceTemplate);
-router.post('/',         protect, authorize('admin', 'campus_manager'), upload.array('documents', 10), createRecord);
+router.post('/',         protect, authorize('admin'), upload.array('documents', 10), createRecord);
 router.post('/bulk',     protect, authorize('admin', 'campus_manager'), upload.single('file'), bulkImportInsurance);
-router.put('/:id',       protect, authorize('admin', 'campus_manager'), updateRecord);
+router.put('/:id',       protect, authorize('admin'), updateRecord);
 router.delete('/:id',   protect, authorize('admin'), deleteRecord);
 
 module.exports = router;

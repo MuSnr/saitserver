@@ -20,11 +20,12 @@ const sanitizeUser = (user) => ({
   name: user.name,
   email: user.email,
   role: user.role,
-  region: user.region,
+  region: user.region || 'South Africa',
   campus: user.campus,
   status: user.status,
   lastLogin: user.lastLogin,
   createdAt: user.createdAt,
+  unreadNotifications: user.unreadNotifications || 0,
 });
 
 // ── Register ──────────────────────────────────────────────────────────────────
@@ -142,7 +143,17 @@ const getMe = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-password -resetPasswordToken -resetPasswordExpires').sort({ createdAt: -1 });
+    let filter = {};
+    if (req.user.role === 'super_admin') {
+      // super_admin sees all users across all regions
+      filter = {};
+    } else {
+      // admin/viewer: only users in their own region
+      filter = { region: req.user.region || 'South Africa' };
+    }
+    const users = await User.find(filter)
+      .select('-password -resetPasswordToken -resetPasswordExpires')
+      .sort({ createdAt: -1 });
     return res.status(200).json({ success: true, users });
   } catch (err) {
     logger.error('Get users error:', err);
@@ -187,6 +198,77 @@ const createUser = async (req, res) => {
   }
 };
 
+// ── Invite user by admin (no password required — user sets own via email link) ─
+
+const inviteUser = async (req, res) => {
+  try {
+    const { name, email, role, region, campus } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({ success: false, message: 'Name and email are required.' });
+    }
+
+    // Validate region enum
+    const validRegions = ['South Africa', 'Kenya'];
+    if (region && !validRegions.includes(region)) {
+      return res.status(422).json({ success: false, message: `region must be one of: ${validRegions.join(', ')}.` });
+    }
+
+    // Non-super_admin admins can only invite users to their own region
+    if (req.user.role === 'admin' && region && region !== req.user.region) {
+      return res.status(403).json({ success: false, message: 'You can only invite users to your own region.' });
+    }
+
+    // admin (not super_admin) cannot assign admin or super_admin roles
+    if (req.user.role === 'admin' && role && ['admin', 'super_admin'].includes(role)) {
+      return res.status(403).json({ success: false, message: 'Admins can only invite campus_manager or viewer roles.' });
+    }
+
+    const existing = await User.findOne({ email: email.toLowerCase().trim() });
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
+    }
+
+    // Create with a random placeholder password — user will replace it via invite link
+    const placeholder = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 12);
+
+    // Generate invite token (reuses the reset-password mechanism)
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+
+    const user = await User.create({
+      name,
+      email: email.toLowerCase().trim(),
+      password: placeholder,
+      role: role || 'viewer',
+      region: region || req.user.region || 'South Africa',
+      campus: campus || '',
+      status: 'active',           // active immediately — just needs to set password
+      verifiedBy: req.user._id,
+      verifiedAt: new Date(),
+      resetPasswordToken:   hashedToken,
+      resetPasswordExpires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+    });
+
+    const inviteUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${rawToken}`;
+
+    // Send invite email fire-and-forget — never block the HTTP response
+    const { sendInviteEmail } = require('../services/emailService');
+    sendInviteEmail(user.email, user.name, inviteUrl, req.user.name)
+      .catch((emailErr) => logger.warn(`Invite email failed for ${email}: ${emailErr.message}`));
+
+    logger.info(`Admin ${req.user.email} invited user: ${email}`);
+    return res.status(201).json({
+      success: true,
+      message: `Invitation sent to ${email}. They will receive an email to set their password.`,
+      user: sanitizeUser(user),
+    });
+  } catch (err) {
+    logger.error('Invite user error:', err);
+    return res.status(500).json({ success: false, message: 'Error sending invitation.' });
+  }
+};
+
 // ── Update user ───────────────────────────────────────────────────────────────
 
 const updateUser = async (req, res) => {
@@ -194,15 +276,34 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, role, region, campus, status } = req.body;
 
+    const targetUser = await User.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+
     // Non-admins can only update their own profile (name/email only)
-    if (req.user.role !== 'admin' && req.user._id.toString() !== id) {
+    if (req.user.role !== 'admin' && req.user.role !== 'super_admin' && req.user._id.toString() !== id) {
       return res.status(403).json({ success: false, message: 'You can only update your own profile.' });
+    }
+
+    // admin (not super_admin) restrictions:
+    if (req.user.role === 'admin') {
+      // Cannot edit other admins or super_admins
+      if (['admin', 'super_admin'].includes(targetUser.role) && req.user._id.toString() !== id) {
+        return res.status(403).json({ success: false, message: 'Admins cannot modify other admin or super admin accounts.' });
+      }
+      // Cannot promote anyone to admin or super_admin
+      if (role && ['admin', 'super_admin'].includes(role)) {
+        return res.status(403).json({ success: false, message: 'Admins can only assign campus_manager or viewer roles.' });
+      }
     }
 
     const updates = {};
     if (name) updates.name = name;
     if (email) updates.email = email.toLowerCase().trim();
-    if (req.user.role === 'admin') {
+
+    if (req.user.role === 'admin' || req.user.role === 'super_admin') {
+      // super_admin can change anything; admin is restricted above
       if (role) updates.role = role;
       if (region !== undefined) updates.region = region;
       if (campus !== undefined) updates.campus = campus;
@@ -236,12 +337,19 @@ const deleteUser = async (req, res) => {
       return res.status(400).json({ success: false, message: 'You cannot delete your own account.' });
     }
 
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
+    const target = await User.findById(id);
+    if (!target) {
       return res.status(404).json({ success: false, message: 'User not found.' });
     }
 
-    logger.info(`User ${id} (${user.email}) deleted by admin ${req.user.email}`);
+    // admin cannot delete other admins or super_admins
+    if (req.user.role === 'admin' && ['admin', 'super_admin'].includes(target.role)) {
+      return res.status(403).json({ success: false, message: 'Admins cannot delete admin or super admin accounts.' });
+    }
+
+    await target.deleteOne();
+
+    logger.info(`User ${id} (${target.email}) deleted by admin ${req.user.email}`);
     return res.status(200).json({ success: true, message: 'User deleted.' });
   } catch (err) {
     logger.error('Delete user error:', err);
@@ -401,6 +509,7 @@ module.exports = {
   getMe,
   getUsers,
   createUser,
+  inviteUser,
   updateUser,
   deleteUser,
   approveUser,

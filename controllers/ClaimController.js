@@ -1,15 +1,11 @@
 const Claim = require('../models/Claim');
 const logger = require('../services/logger');
+const { getRegionFilter } = require('../services/regionService');
 
 // GET /api/claims
 const getClaims = async (req, res) => {
   try {
-    const filter = {};
-
-    // Campus-manager RBAC
-    if (req.user.role === 'campus_manager' && req.user.campus) {
-      filter.subsidiary = req.user.campus;
-    }
+    const filter = await getRegionFilter(req.user);
 
     // Optional filters from query params
     if (req.query.status && req.query.status !== 'all') filter.claimStatus = req.query.status;
@@ -50,7 +46,7 @@ const createClaim = async (req, res) => {
       dateOfIncident,
       dateOfSubmission,
       dateOfSettlement: req.body.dateOfSettlement || null,
-      claimStatus: req.body.claimStatus || 'Pending',
+      claimStatus: req.body.claimStatus || 'Internal WIP',
       claimValue: Number(req.body.claimValue) || 0,
       description,
       notes: req.body.notes || '',
@@ -58,6 +54,16 @@ const createClaim = async (req, res) => {
       claimFormLink: req.body.claimFormLink || '',
       dischargeVoucherLink: req.body.dischargeVoucherLink || '',
       folderLink: req.body.folderLink || '',
+      // Extended pipeline fields
+      linked_incident_id:    req.body.linked_incident_id    || null,
+      insurer_notified_date: req.body.insurer_notified_date || null,
+      internal_report_date:  req.body.internal_report_date  || null,
+      excess_paid:           Number(req.body.excess_paid)   || 0,
+      claim_amount_paid:     Number(req.body.claim_amount_paid) || 0,
+      other_replacement:     req.body.other_replacement     || '',
+      np_user:               req.body.np_user               || '',
+      item_pending:          req.body.item_pending          || '',
+      region:                req.body.region                || 'South Africa',
       documents,
       createdBy: req.user._id,
     });
@@ -74,15 +80,24 @@ const createClaim = async (req, res) => {
 const updateClaim = async (req, res) => {
   try {
     const updates = {
-      ...(req.body.claimStatus !== undefined && { claimStatus: req.body.claimStatus }),
-      ...(req.body.claimValue !== undefined && { claimValue: Number(req.body.claimValue) }),
-      ...(req.body.dateOfSettlement !== undefined && { dateOfSettlement: req.body.dateOfSettlement || null }),
-      ...(req.body.description !== undefined && { description: req.body.description }),
-      ...(req.body.notes !== undefined && { notes: req.body.notes }),
-      ...(req.body.incidentFormLink !== undefined && { incidentFormLink: req.body.incidentFormLink }),
-      ...(req.body.claimFormLink !== undefined && { claimFormLink: req.body.claimFormLink }),
+      ...(req.body.claimStatus          !== undefined && { claimStatus:          req.body.claimStatus }),
+      ...(req.body.claimValue           !== undefined && { claimValue:           Number(req.body.claimValue) }),
+      ...(req.body.dateOfSettlement     !== undefined && { dateOfSettlement:     req.body.dateOfSettlement || null }),
+      ...(req.body.description          !== undefined && { description:          req.body.description }),
+      ...(req.body.notes                !== undefined && { notes:                req.body.notes }),
+      ...(req.body.incidentFormLink     !== undefined && { incidentFormLink:     req.body.incidentFormLink }),
+      ...(req.body.claimFormLink        !== undefined && { claimFormLink:        req.body.claimFormLink }),
       ...(req.body.dischargeVoucherLink !== undefined && { dischargeVoucherLink: req.body.dischargeVoucherLink }),
-      ...(req.body.folderLink !== undefined && { folderLink: req.body.folderLink }),
+      ...(req.body.folderLink           !== undefined && { folderLink:           req.body.folderLink }),
+      // Extended pipeline fields
+      ...(req.body.insurer_notified_date !== undefined && { insurer_notified_date: req.body.insurer_notified_date || null }),
+      ...(req.body.internal_report_date  !== undefined && { internal_report_date:  req.body.internal_report_date || null }),
+      ...(req.body.excess_paid           !== undefined && { excess_paid:           Number(req.body.excess_paid) }),
+      ...(req.body.claim_amount_paid     !== undefined && { claim_amount_paid:     Number(req.body.claim_amount_paid) }),
+      ...(req.body.other_replacement     !== undefined && { other_replacement:     req.body.other_replacement }),
+      ...(req.body.np_user               !== undefined && { np_user:               req.body.np_user }),
+      ...(req.body.item_pending          !== undefined && { item_pending:          req.body.item_pending }),
+      ...(req.body.region                !== undefined && { region:                req.body.region }),
       updatedBy: req.user._id,
     };
 

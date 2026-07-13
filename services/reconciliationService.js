@@ -12,6 +12,7 @@ const INSURANCE_TO_ASSET_STATUS = {
   'Request Addition': 'Request Addition',
   'Request Update':   'Insured',          // still covered, just updating
   Removed:            'Not Insured',
+  'Pending Review':   '',                 // auto-created — no asset status change yet
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -220,6 +221,77 @@ async function onInsuranceRecordDeleted(rec) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Auto-create an InsuranceRecord from a newly created Asset.
+// Sets status = 'Pending Review' and maps all derivable fields.
+// Establishes the bidirectional link on both documents.
+// Called fire-and-forget from AssetController.createAsset.
+// ─────────────────────────────────────────────────────────────────────────────
+async function autoCreateInsuranceRecord(asset, userId) {
+  const ir = await InsuranceRecord.create({
+    subsidiary:           asset.subsidiary,
+    classOfInsurance:     asset.insuranceClass,
+    descriptionDetails:   asset.description,
+    assetOrInsurableRisk: asset.description,
+    serialNumber:         asset.serialNumber || '',
+    quantity:             asset.quantity     || 1,
+    unitCost:             asset.unitPrice    || 0,
+    sumInsured:           asset.sumInsured   || 0,
+    status:               'Pending Review',
+    // Insurance-specific fields — left blank for admin to complete
+    monthlyPremium:  0,
+    annualPremium:   0,
+    december2025Premium: 0,
+    rate:            0,
+    policyReference: '',
+    vendor:          '',
+    interestNoted:   '',
+    // Link back to asset
+    linkedAssetId: asset._id,
+    linkedAt:      new Date(),
+    createdBy:     userId,
+  });
+
+  // Set the forward link on the asset
+  await Asset.findByIdAndUpdate(asset._id, { linkedInsuranceRecordId: ir._id });
+
+  logger.info(`Auto-created InsuranceRecord ${ir._id} (Pending Review) for Asset ${asset.assetId}`);
+  return ir;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Mirror the mirrored fields from an updated Asset to its linked InsuranceRecord.
+// Only updates the explicitly allowed set of fields — never touches premium,
+// rate, policy reference, vendor, interestNoted, or status.
+// Called fire-and-forget from AssetController.updateAsset.
+// ─────────────────────────────────────────────────────────────────────────────
+async function mirrorFieldsToInsuranceRecord(assetId, updatedFields) {
+  const asset = await Asset.findById(assetId);
+  if (!asset || !asset.linkedInsuranceRecordId) return;
+
+  // Build update payload from explicit allowlist only
+  const payload = {};
+  if (updatedFields.subsidiary    !== undefined) payload.subsidiary          = asset.subsidiary;
+  if (updatedFields.insuranceClass !== undefined) payload.classOfInsurance   = asset.insuranceClass;
+  if (updatedFields.description   !== undefined) {
+    payload.descriptionDetails   = asset.description;
+    payload.assetOrInsurableRisk = asset.description;
+  }
+  if (updatedFields.serialNumber  !== undefined) payload.serialNumber = asset.serialNumber;
+  if (updatedFields.quantity      !== undefined) payload.quantity     = asset.quantity;
+  if (updatedFields.unitPrice     !== undefined) payload.unitCost     = asset.unitPrice;
+  // Always sync sumInsured if it was recomputed
+  if (updatedFields.sumInsured    !== undefined || updatedFields.quantity !== undefined || updatedFields.unitPrice !== undefined) {
+    payload.sumInsured = asset.sumInsured;
+  }
+
+  if (Object.keys(payload).length === 0) return;
+
+  await InsuranceRecord.findByIdAndUpdate(asset.linkedInsuranceRecordId, payload, { new: true });
+
+  logger.info(`Mirrored field updates from Asset ${asset.assetId} to InsuranceRecord ${asset.linkedInsuranceRecordId}`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Auto-link a newly created / updated Asset to the best matching InsuranceRecord.
 // Called from AssetController after save.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -237,6 +309,48 @@ async function autoLinkAsset(asset) {
 
   await linkAssetToInsuranceRecord(asset._id, match.record._id);
   logger.info(`Auto-linked Asset ${asset.assetId} to InsuranceRecord ${match.record._id} (score: ${match.score})`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Kenya 1:1 Auto-Sync — deterministic, no scoring engine.
+// Creates an InsuranceRecord with status='Insured' directly from the asset.
+// Mirrors all Kenya manager fields into the InsuranceRecord.
+// Called fire-and-forget from AssetController.createAsset for Kenya assets.
+// ─────────────────────────────────────────────────────────────────────────────
+async function keAutoSync(asset, userId) {
+  const ir = await InsuranceRecord.create({
+    subsidiary:           asset.subsidiary,
+    classOfInsurance:     asset.insuranceClass,
+    descriptionDetails:   asset.description,
+    assetOrInsurableRisk: asset.description,
+    serialNumber:         asset.serialNumber || '',
+    quantity:             asset.quantity     || 1,
+    unitCost:             asset.unitPrice    || 0,
+    sumInsured:           asset.sumInsured   || 0,
+    status:               'Insured',   // NOT 'Pending Review'
+    linkedAssetId:        asset._id,
+    linkedAt:             new Date(),
+    // Mirror Kenya manager fields so the Unified Register shows everything
+    physical_location:    asset.physical_location    || '',
+    procuring_department: asset.procuring_department || '',
+    year_of_purchase:     asset.year_of_purchase     || null,
+    years_of_service:     asset.years_of_service     || null,
+    age_bracket:          asset.age_bracket          || '',
+    asset_class:          asset.asset_class          || '',
+    document_link:        asset.document_link        || '',
+    pr_ref:               asset.pr_ref               || '',
+    // document_link left empty — user may add it later via the insurance register
+    createdBy: userId,
+  });
+
+  await Asset.findByIdAndUpdate(asset._id, {
+    linkedInsuranceRecordId: ir._id,
+    insuranceStatus:         'Insured',
+    statusChangedAt:         new Date(),
+  });
+
+  logger.info(`KE 1:1 auto-sync: Asset ${asset.assetId} ↔ InsuranceRecord ${ir._id}`);
+  return ir;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -329,6 +443,9 @@ module.exports = {
   onAssetDeleted,
   onInsuranceRecordDeleted,
   autoLinkAsset,
+  autoCreateInsuranceRecord,
+  mirrorFieldsToInsuranceRecord,
+  keAutoSync,
   buildReconciliationReport,
   INSURANCE_TO_ASSET_STATUS,
   ASSET_TO_INSURANCE_STATUS,

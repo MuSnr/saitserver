@@ -19,7 +19,7 @@ const upload = multer({
 router.get('/',           protect, getAssets);
 router.get('/template',   protect, downloadTemplate);
 router.post('/',          protect, authorize('admin', 'campus_manager'), createAsset);
-router.post('/bulk',      protect, authorize('admin', 'campus_manager'), upload.single('file'), bulkImport);
+router.post('/bulk',      protect, authorize('admin'), upload.single('file'), bulkImport);
 router.put('/:id',        protect, authorize('admin', 'campus_manager'), updateAsset);
 router.delete('/:id',     protect, authorize('admin'), deleteAsset);
 

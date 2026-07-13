@@ -5,7 +5,11 @@ const campusSchema = new mongoose.Schema(
     name: { type: String, required: true, unique: true },
     shortName: { type: String, required: true },
     initials: { type: String, required: true },
-    region: { type: String, default: 'South Africa' },
+    region: {
+      type: String,
+      enum: ['South Africa', 'Kenya'],
+      default: 'South Africa',
+    },
     active: { type: Boolean, default: true },
   },
   { timestamps: true }

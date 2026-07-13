@@ -35,6 +35,24 @@ const assetSchema = new mongoose.Schema(
       ref:  'InsuranceRecord',
       default: null,
     },
+
+    // ── Kenya dual-entry: Campus Manager fields ───────────────────────────
+    // Column mapping from Final_Count spreadsheet
+    row_ref:             { type: String,  default: '' },            // col A
+    asset_name:          { type: String,  default: '' },            // col B (mirrors description)
+    physical_location:   { type: String,  default: '' },            // col D
+    procuring_department:{ type: String,  default: '' },            // col E
+    year_of_purchase:    { type: Number,  default: null },          // col H
+    years_of_service:    { type: Number,  default: null },          // col J (computed)
+    age_bracket: {                                                   // col K
+      type: String,
+      enum: ['<2.5 Yrs', '2.5 - 5.0 Yrs', '5.0 - 7.5 Yrs', '7.5 - 10 Yrs', '10> Yrs', ''],
+      default: '',
+    },
+    asset_class:         { type: String,  default: '' },            // col L
+    // total_cost = quantity * unitPrice (col R) — computed in pre-save, same as sumInsured
+    document_link:       { type: String,  default: '' },            // col AG — invoice attachment (mandatory KE)
+    pr_ref:              { type: String,  default: '' },            // col AH
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },

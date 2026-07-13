@@ -3,7 +3,22 @@ const logger = require('../services/logger');
 
 const getCampuses = async (req, res) => {
   try {
-    const campuses = await Campus.find().sort({ name: 1 });
+    const user = req.user;
+    let filter = {};
+
+    if (user.role === 'super_admin') {
+      // Super admin sees everything — no filter
+      filter = {};
+    } else if (user.role === 'campus_manager') {
+      // Campus manager only sees their own campus
+      filter = { name: user.campus };
+    } else {
+      // admin / viewer — scope to their region only
+      const region = user.region || 'South Africa';
+      filter = { region };
+    }
+
+    const campuses = await Campus.find(filter).sort({ name: 1 });
     return res.status(200).json({ success: true, campuses });
   } catch (err) {
     logger.error('Get campuses error:', err);
