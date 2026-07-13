@@ -630,3 +630,7 @@
     at async Collection.findOne (C:\Users\Novaneer\Desktop\backend\node_modules\mongodb\lib\collection.js:313:24)
 2026-07-03 20:25:39 [error]: MongoDB connection failed:
 2026-07-03 20:25:39 [error]: MongoDB connection failed:
+2026-07-14 02:45:22 [error]: Startup failed:
+2026-07-14 02:47:15 [error]: Startup failed:
+2026-07-14 02:52:29 [error]: Startup failed:
+2026-07-14 02:53:04 [error]: Startup failed:
