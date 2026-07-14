@@ -56,48 +56,50 @@ const getAssets = async (req, res) => {
 // ── POST /api/assets ──────────────────────────────────────────────────────────
 const createAsset = async (req, res) => {
   try {
-    const {
-      subsidiary, insuranceClass, description,
-      serialNumber, gradeLocation, quantity, unitPrice,
-      isDuplicate, duplicateNote, subLocation, insuranceStatus, year, notes,
-      // Kenya campus-manager fields
-      row_ref, asset_name, physical_location, procuring_department,
-      year_of_purchase, years_of_service, age_bracket, asset_class,
-      document_link, pr_ref,
-    } = req.body;
+    const { subsidiary, insuranceClass, description, unitPrice } = req.body;
 
-    if (!subsidiary || !insuranceClass || !description || !unitPrice) {
+    // Kenya: insuranceClass not required — use asset_class or default
+    const isKenyaAsset = !!(req.body.asset_class || req.body.physical_location || req.body.procuring_department);
+    const resolvedClass = insuranceClass || (isKenyaAsset ? 'Business All Risk' : null);
+
+    if (!subsidiary || !resolvedClass || !unitPrice) {
       return res.status(400).json({
         success: false,
-        message: 'School, insurance class, description and unit price are required.',
+        message: 'School, insurance class and unit price are required.',
+      });
+    }
+    if (!isKenyaAsset && !description) {
+      return res.status(400).json({
+        success: false,
+        message: 'Description is required.',
       });
     }
 
     const asset = await Asset.create({
       subsidiary,
-      insuranceClass,
-      description,
-      serialNumber:  serialNumber  || '',
-      gradeLocation: gradeLocation || '',
-      quantity:      Number(quantity)  || 1,
-      unitPrice:     Number(unitPrice),
-      isDuplicate:   isDuplicate === true || isDuplicate === 'true',
-      duplicateNote: duplicateNote || '',
-      subLocation:   subLocation  || '',
-      insuranceStatus: insuranceStatus || '',
-      year:          Number(year) || new Date().getFullYear(),
-      notes:         notes || '',
+      insuranceClass:  resolvedClass,
+      description:     req.body.description   || req.body.asset_name || '',
+      serialNumber:    req.body.serialNumber   || '',
+      gradeLocation:   req.body.gradeLocation  || '',
+      quantity:        Number(req.body.quantity)  || 1,
+      unitPrice:       Number(req.body.unitPrice),
+      isDuplicate:     req.body.isDuplicate === true || req.body.isDuplicate === 'true',
+      duplicateNote:   req.body.duplicateNote  || '',
+      subLocation:     req.body.subLocation    || '',
+      insuranceStatus: req.body.insuranceStatus || '',
+      year:            Number(req.body.year)   || new Date().getFullYear(),
+      notes:           req.body.notes          || '',
       // Kenya manager fields
-      row_ref:              row_ref              || '',
-      asset_name:           asset_name           || description || '',
-      physical_location:    physical_location    || '',
-      procuring_department: procuring_department || '',
-      year_of_purchase:     year_of_purchase     ? Number(year_of_purchase) : null,
-      years_of_service:     years_of_service     ? Number(years_of_service) : null,
-      age_bracket:          age_bracket          || '',
-      asset_class:          asset_class          || '',
-      document_link:        document_link        || '',
-      pr_ref:               pr_ref               || '',
+      row_ref:              req.body.row_ref              || '',
+      asset_name:           req.body.asset_name           || req.body.description || '',
+      physical_location:    req.body.physical_location    || '',
+      procuring_department: req.body.procuring_department || '',
+      year_of_purchase:     req.body.year_of_purchase     ? Number(req.body.year_of_purchase) : null,
+      years_of_service:     req.body.years_of_service     ? Number(req.body.years_of_service) : null,
+      age_bracket:          req.body.age_bracket          || '',
+      asset_class:          req.body.asset_class          || '',
+      document_link:        req.body.document_link        || '',
+      pr_ref:               req.body.pr_ref               || '',
       createdBy:     req.user._id,
     });
 

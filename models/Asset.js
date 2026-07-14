@@ -6,14 +6,15 @@ const assetSchema = new mongoose.Schema(
     subsidiary:   { type: String, required: true },
     insuranceClass: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
       enum: [
         'Fire','Buildings Combined','Business All Risk','Electronic Equipment',
         'Theft Section','Business Interruption','Public Liability','Umbrella Liability',
-        'Employers Liability','Sasria','Broker Fees','TWK Assist / Bystand',
+        'Employers Liability','Sasria','Broker Fees','TWK Assist / Bystand', '',
       ],
     },
-    description:   { type: String, required: true },
+    description:   { type: String, default: '' },
     serialNumber:  { type: String, default: '' },
     gradeLocation: { type: String, default: '' },
     quantity:      { type: Number, default: 1, min: 0 },
