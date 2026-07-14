@@ -28,21 +28,28 @@ const getRecords = async (req, res) => {
 const createRecord = async (req, res) => {
   try {
     const { subsidiary, classOfInsurance, sumInsured } = req.body;
-    if (!subsidiary || !classOfInsurance || sumInsured === undefined) {
+
+    if (!subsidiary || sumInsured === undefined) {
       return res.status(400).json({
         success: false,
-        message: 'Subsidiary, class and sum insured are required.',
+        message: 'Campus and sum insured are required.',
       });
     }
 
-    // Kenya requires document_link (invoice/PR reference)
+    // Determine region to apply region-specific rules
     const campusRegion = await getCampusRegion(subsidiary);
-    if (campusRegion === 'Kenya' && !req.body.document_link) {
-      return res.status(422).json({
+    const isKenya = campusRegion === 'Kenya';
+
+    // SA requires classOfInsurance; Kenya uses asset_class instead
+    if (!isKenya && !classOfInsurance) {
+      return res.status(400).json({
         success: false,
-        message: 'document_link (invoice or PR reference) is required for Kenya records.',
+        message: 'Class of Insurance is required for South Africa records.',
       });
     }
+
+    // For Kenya, use asset_class as the classOfInsurance if not provided
+    const resolvedClass = classOfInsurance || req.body.asset_class || 'Business All Risk';
 
     const documents = (req.files || []).map((f) => ({
       filename:     f.filename,
@@ -55,6 +62,7 @@ const createRecord = async (req, res) => {
 
     const record = await InsuranceRecord.create({
       ...req.body,
+      classOfInsurance:    resolvedClass,          // use resolved (Kenya fallback)
       sumInsured:          Number(req.body.sumInsured)     || 0,
       monthlyPremium:      Number(req.body.monthlyPremium) || 0,
       unitCost:            Number(req.body.unitCost)       || 0,
@@ -62,7 +70,7 @@ const createRecord = async (req, res) => {
       rate:                Number(req.body.rate)           || 0,
       annualPremium:       annualPremiumVal,
       premiumYear:         Number(req.body.premiumYear)    || new Date().getFullYear(),
-      december2025Premium: annualPremiumVal,   // keep legacy field in sync
+      december2025Premium: annualPremiumVal,
       documents,
       createdBy: req.user._id,
     });

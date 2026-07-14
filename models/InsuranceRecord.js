@@ -9,7 +9,7 @@ const insuranceRecordSchema = new mongoose.Schema(
       default: 'Active',
     },
     monthYrAcquisition: { type: String, default: '' },
-    classOfInsurance: { type: String, required: true },
+    classOfInsurance: { type: String, default: '' },
     category: { type: String, default: 'Asset Based' },
     policyReference: { type: String, default: '' },
     assetOrInsurableRisk: { type: String, default: '' },
