@@ -1,15 +1,17 @@
 const Asset = require('../models/Asset');
 const Claim = require('../models/Claim');
 const InsuranceRecord = require('../models/InsuranceRecord');
+const { getRegionFilter } = require('../services/regionService');
 const logger = require('../services/logger');
 
 // ── GET /api/reports/variance ─────────────────────────────────────────────────
 const getVarianceReport = async (req, res) => {
   try {
-    const campusFilter = {};
-    if (req.user.role === 'campus_manager' && req.user.campus) {
-      campusFilter.subsidiary = req.user.campus;
-    } else if (req.query.subsidiary && req.query.subsidiary !== 'all') {
+    // Base region filter — ensures region isolation
+    const regionBase = await getRegionFilter(req.user);
+
+    const campusFilter = { ...regionBase };
+    if (req.query.subsidiary && req.query.subsidiary !== 'all') {
       campusFilter.subsidiary = req.query.subsidiary;
     }
 
@@ -86,11 +88,10 @@ const getVarianceReport = async (req, res) => {
 // ── GET /api/reports/claims ───────────────────────────────────────────────────
 const getClaimsReport = async (req, res) => {
   try {
-    const filter = {};
+    // Base region filter
+    const filter = await getRegionFilter(req.user);
 
-    if (req.user.role === 'campus_manager' && req.user.campus) {
-      filter.subsidiary = req.user.campus;
-    } else if (req.query.subsidiary && req.query.subsidiary !== 'all') {
+    if (req.query.subsidiary && req.query.subsidiary !== 'all') {
       filter.subsidiary = req.query.subsidiary;
     }
 
@@ -142,11 +143,10 @@ const getClaimsReport = async (req, res) => {
 // ── GET /api/reports/assets ───────────────────────────────────────────────────
 const getAssetsReport = async (req, res) => {
   try {
-    const filter = {};
+    // Base region filter
+    const filter = await getRegionFilter(req.user);
 
-    if (req.user.role === 'campus_manager' && req.user.campus) {
-      filter.subsidiary = req.user.campus;
-    } else if (req.query.subsidiary && req.query.subsidiary !== 'all') {
+    if (req.query.subsidiary && req.query.subsidiary !== 'all') {
       filter.subsidiary = req.query.subsidiary;
     }
 

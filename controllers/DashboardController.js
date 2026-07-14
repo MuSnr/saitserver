@@ -31,19 +31,33 @@ const CLASS_DESCRIPTIONS = {
 const getDashboardAnalytics = async (req, res) => {
   try {
     const campusFilter = await getRegionFilter(req.user);
-    const userRegion = req.user.region || 'South Africa';
-    const isKE = req.user.role !== 'super_admin' && userRegion === 'Kenya';
-    const isSA = req.user.role === 'super_admin' || userRegion !== 'Kenya';
+    // super_admin can pass ?region to view a specific profile
+    const effectiveRegion = req.user.role === 'super_admin' && req.query.region
+      ? req.query.region
+      : (req.user.region || 'South Africa');
+    const isKE = effectiveRegion === 'Kenya';
+    const isSA = effectiveRegion === 'South Africa';
+
+    // For super_admin with a region override, re-scope the campusFilter to that region
+    let scopedCampusFilter = campusFilter;
+    if (req.user.role === 'super_admin' && req.query.region) {
+      const regionCampuses = await Campus.find({ region: req.query.region }).select('name').lean();
+      const names = regionCampuses.map((c) => c.name);
+      scopedCampusFilter = names.length > 0 ? { subsidiary: { $in: names } } : {};
+    }
 
     // Build incident scope filter (campus_id based)
     let incidentCampusFilter = {};
     if (req.user.role === 'super_admin') {
-      incidentCampusFilter = {};
+      if (req.query.region) {
+        const campuses = await Campus.find({ region: req.query.region }).select('_id').lean();
+        incidentCampusFilter = campuses.length > 0 ? { campus_id: { $in: campuses.map((c) => c._id) } } : {};
+      }
+      // no ?region → all incidents
     } else if (req.user.role === 'campus_manager') {
       const campus = await Campus.findOne({ name: req.user.campus }).select('_id').lean();
       incidentCampusFilter = campus ? { campus_id: campus._id } : {};
     } else {
-      const effectiveRegion = userRegion;
       const campuses = await Campus.find({ region: effectiveRegion }).select('_id').lean();
       incidentCampusFilter = campuses.length > 0 ? { campus_id: { $in: campuses.map((c) => c._id) } } : {};
     }
@@ -60,51 +74,53 @@ const getDashboardAnalytics = async (req, res) => {
     ] = await Promise.all([
       // Assets grouped by campus
       Asset.aggregate([
-        { $match: { ...campusFilter, isDuplicate: { $ne: true } } },
+        { $match: { ...scopedCampusFilter, isDuplicate: { $ne: true } } },
         { $group: { _id: '$subsidiary', totalAssets: { $sum: '$quantity' }, totalValue: { $sum: '$sumInsured' } } },
       ]),
       // Assets grouped by class
       Asset.aggregate([
-        { $match: { ...campusFilter, isDuplicate: { $ne: true } } },
+        { $match: { ...scopedCampusFilter, isDuplicate: { $ne: true } } },
         { $group: { _id: '$insuranceClass', totalValue: { $sum: '$sumInsured' }, totalQty: { $sum: '$quantity' } } },
       ]),
       // Insurance totals (active/insured only)
       InsuranceRecord.aggregate([
-        { $match: { ...campusFilter, status: { $in: ['Active', 'Insured'] } } },
+        { $match: { ...scopedCampusFilter, status: { $in: ['Active', 'Insured'] } } },
         { $group: { _id: null, totalSumInsured: { $sum: '$sumInsured' }, totalMonthlyPremium: { $sum: '$monthlyPremium' } } },
       ]),
       // Insurance grouped by class
       InsuranceRecord.aggregate([
-        { $match: { ...campusFilter, status: { $in: ['Active', 'Insured'] } } },
+        { $match: { ...scopedCampusFilter, status: { $in: ['Active', 'Insured'] } } },
         { $group: { _id: '$classOfInsurance', insuredValue: { $sum: '$sumInsured' }, monthlyPremium: { $sum: '$monthlyPremium' } } },
       ]),
       // Insurance grouped by campus
       InsuranceRecord.aggregate([
-        { $match: { ...campusFilter, status: { $in: ['Active', 'Insured'] } } },
+        { $match: { ...scopedCampusFilter, status: { $in: ['Active', 'Insured'] } } },
         { $group: { _id: '$subsidiary', insuredValue: { $sum: '$sumInsured' } } },
       ]),
       // Claims grouped by status (live aggregation)
       Claim.aggregate([
-        { $match: campusFilter },
+        { $match: scopedCampusFilter },
         { $group: { _id: '$claimStatus', count: { $sum: 1 }, totalValue: { $sum: '$claimValue' } } },
       ]),
-      // All campuses scoped to user
-      req.user.role === 'super_admin'
-        ? Campus.find().sort({ name: 1 })
-        : Campus.find({ region: req.user.region }).sort({ name: 1 }),
+      // Campuses scoped to effective region
+      req.user.role === 'super_admin' && req.query.region
+        ? Campus.find({ region: req.query.region }).sort({ name: 1 })
+        : req.user.role === 'super_admin'
+          ? Campus.find().sort({ name: 1 })
+          : Campus.find({ region: effectiveRegion }).sort({ name: 1 }),
       // SA: Pending Review count
-      InsuranceRecord.countDocuments({ ...campusFilter, status: 'Pending Review' }),
+      InsuranceRecord.countDocuments({ ...scopedCampusFilter, status: 'Pending Review' }),
       // All: Open incidents (New or Under Review)
       IncidentNotification.countDocuments({ ...incidentCampusFilter, status: { $in: ['New', 'Under Review'] } }),
       // All: Claims by status breakdown
       Claim.aggregate([
-        { $match: campusFilter },
+        { $match: scopedCampusFilter },
         { $group: { _id: '$claimStatus', count: { $sum: 1 } } },
       ]),
       // KE: Assets created this month (Matched by Design)
       isKE
         ? Asset.countDocuments({
-            ...campusFilter,
+            ...scopedCampusFilter,
             createdAt: { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) },
           })
         : Promise.resolve(0),
@@ -164,8 +180,8 @@ const getDashboardAnalytics = async (req, res) => {
     // ── KE Unified Register Totals ─────────────────────────────────────────
     let keUnifiedTotals = null;
     if (isKE) {
-      const keAssetCount   = await Asset.countDocuments(campusFilter);
-      const keInsuredCount = await InsuranceRecord.countDocuments({ ...campusFilter, status: 'Insured' });
+      const keAssetCount   = await Asset.countDocuments(scopedCampusFilter);
+      const keInsuredCount = await InsuranceRecord.countDocuments({ ...scopedCampusFilter, status: 'Insured' });
       keUnifiedTotals = { assetCount: keAssetCount, insuredCount: keInsuredCount, coveragePct: 100 };
     }
 
