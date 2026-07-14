@@ -397,6 +397,7 @@ async function buildReconciliationReport(campusFilter = {}) {
       serialNumber:        r.serialNumber || '',
       sumInsured:          r.sumInsured,
       monthlyPremium:      r.monthlyPremium || 0,
+      annualPremium:       r.annualPremium  || r.december2025Premium || 0,
       status:              r.status,
       policyReference:     r.policyReference || '',
     }));
@@ -416,6 +417,7 @@ async function buildReconciliationReport(campusFilter = {}) {
     }));
 
   const totalMonthlyAtRisk = ghostItems.reduce((s, g) => s + (g.monthlyPremium || 0), 0);
+  const totalAnnualAtRisk  = ghostItems.reduce((s, g) => s + (g.annualPremium  || 0), 0);
   const totalUninsuredValue = uninsuredAssets.reduce((s, a) => s + (a.assetValue || 0), 0);
 
   return {
@@ -423,8 +425,9 @@ async function buildReconciliationReport(campusFilter = {}) {
       matchedCount:         matched.length,
       ghostItemsCount:      ghostItems.length,
       uninsuredAssetsCount: uninsuredAssets.length,
-      totalMonthlyAtRisk,   // premiums being paid for ghost items
-      totalUninsuredValue,  // asset value with no insurance cover
+      totalMonthlyAtRisk,
+      totalAnnualAtRisk,
+      totalUninsuredValue,
     },
     matched,
     ghostItems,
