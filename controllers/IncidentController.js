@@ -7,15 +7,22 @@ const logger = require('../services/logger');
 // ── GET /api/incidents ────────────────────────────────────────────────────────
 const getIncidents = async (req, res) => {
   try {
-    // Build campus_id filter based on role
     let campusFilter = {};
+
     if (req.user.role === 'super_admin') {
-      campusFilter = {};
+      // super_admin: respect ?region query param (passed by frontend when profile is switched)
+      if (req.query.region) {
+        const campuses = await Campus.find({ region: req.query.region }).select('_id').lean();
+        campusFilter = { campus_id: { $in: campuses.map((c) => c._id) } };
+      }
+      // no ?region → return all (true global view)
     } else if (req.user.role === 'campus_manager') {
       const campus = await Campus.findOne({ name: req.user.campus }).select('_id').lean();
       campusFilter = campus ? { campus_id: campus._id } : { campus_id: null };
     } else {
-      const campuses = await Campus.find({ region: req.user.region }).select('_id').lean();
+      // admin / viewer — scope to their region
+      const region = req.user.region || 'South Africa';
+      const campuses = await Campus.find({ region }).select('_id').lean();
       campusFilter = { campus_id: { $in: campuses.map((c) => c._id) } };
     }
 
