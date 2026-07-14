@@ -8,15 +8,17 @@ const {
   unlinkAsset,
   keAutoSync,
 } = require('../services/reconciliationService');
-const { getCampusRegion } = require('../services/regionService');
+const { getCampusRegion, getRegionFilter } = require('../services/regionService');
 
 // ── GET /api/assets ───────────────────────────────────────────────────────────
 const getAssets = async (req, res) => {
   try {
     const { campus, insuranceClass, insuranceStatus, subLocation, search } = req.query;
-    const filter = {};
 
-    // RBAC: campus_manager only sees their own campus
+    // Start with region-scoped base filter — pass ?region override for super_admin profile switching
+    const filter = await getRegionFilter(req.user, req.query.region);
+
+    // Further narrow by specific campus if requested
     if (req.user.role === 'campus_manager' && req.user.campus) {
       filter.subsidiary = req.user.campus;
     } else if (campus && campus !== 'all') {

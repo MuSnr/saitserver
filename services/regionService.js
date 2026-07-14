@@ -58,19 +58,28 @@ async function getCampusRegion(campusName) {
 
 /**
  * Returns a MongoDB filter object scoped to the authenticated user's region/campus.
- * super_admin → {} (no filter)
+ * super_admin → {} unless overrideRegion is passed (for profile switching)
  * campus_manager → { subsidiary: user.campus }
  * admin / viewer → { subsidiary: { $in: [...campusNamesInRegion] } }
+ *
+ * @param {object} user - req.user
+ * @param {string} [overrideRegion] - optional region override for super_admin profile switching
  */
-async function getRegionFilter(user) {
+async function getRegionFilter(user, overrideRegion) {
   if (!user) return {};
-  if (user.role === 'super_admin') return {};
+  if (user.role === 'super_admin') {
+    // If a region override is passed (super_admin profile switching), scope to that region
+    if (overrideRegion) {
+      const campusNames = await getCampusNamesByRegion(overrideRegion);
+      if (campusNames.length === 0) return {};
+      return { subsidiary: { $in: campusNames } };
+    }
+    return {}; // no override → global view
+  }
   if (user.role === 'campus_manager') return { subsidiary: user.campus };
   // admin or viewer — scope to all campuses in their region
-  // Fall back to 'South Africa' if region is empty (legacy users)
   const effectiveRegion = user.region || 'South Africa';
   const campusNames = await getCampusNamesByRegion(effectiveRegion);
-  // If no campuses found for region, return unfiltered (prevents blank dashboard)
   if (campusNames.length === 0) return {};
   return { subsidiary: { $in: campusNames } };
 }

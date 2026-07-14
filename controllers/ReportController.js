@@ -8,7 +8,7 @@ const logger = require('../services/logger');
 const getVarianceReport = async (req, res) => {
   try {
     // Base region filter — ensures region isolation
-    const regionBase = await getRegionFilter(req.user);
+    const regionBase = await getRegionFilter(req.user, req.query.region);
 
     const campusFilter = { ...regionBase };
     if (req.query.subsidiary && req.query.subsidiary !== 'all') {
@@ -89,7 +89,7 @@ const getVarianceReport = async (req, res) => {
 const getClaimsReport = async (req, res) => {
   try {
     // Base region filter
-    const filter = await getRegionFilter(req.user);
+    const filter = await getRegionFilter(req.user, req.query.region);
 
     if (req.query.subsidiary && req.query.subsidiary !== 'all') {
       filter.subsidiary = req.query.subsidiary;
@@ -144,7 +144,7 @@ const getClaimsReport = async (req, res) => {
 const getAssetsReport = async (req, res) => {
   try {
     // Base region filter
-    const filter = await getRegionFilter(req.user);
+    const filter = await getRegionFilter(req.user, req.query.region);
 
     if (req.query.subsidiary && req.query.subsidiary !== 'all') {
       filter.subsidiary = req.query.subsidiary;

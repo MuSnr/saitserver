@@ -5,7 +5,7 @@ const { getRegionFilter } = require('../services/regionService');
 // GET /api/claims
 const getClaims = async (req, res) => {
   try {
-    const filter = await getRegionFilter(req.user);
+    const filter = await getRegionFilter(req.user, req.query.region);
 
     // Optional filters from query params
     if (req.query.status && req.query.status !== 'all') filter.claimStatus = req.query.status;

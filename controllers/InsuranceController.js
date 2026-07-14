@@ -12,7 +12,7 @@ const { getRegionFilter, getCampusRegion } = require('../services/regionService'
 // ── GET /api/insurance-register ───────────────────────────────────────────────
 const getRecords = async (req, res) => {
   try {
-    const filter = await getRegionFilter(req.user);
+    const filter = await getRegionFilter(req.user, req.query.region);
     const records = await InsuranceRecord.find(filter)
       .populate('createdBy', 'name email')
       .populate('linkedAssetId', 'assetId description insuranceStatus sumInsured serialNumber')
