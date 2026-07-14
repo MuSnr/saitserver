@@ -1,5 +1,6 @@
 const XLSX = require('xlsx');
 const Asset = require('../models/Asset');
+const { getCampusRegion } = require('../services/regionService');
 const logger = require('../services/logger');
 
 // Normalise column headers — strip whitespace, lowercase
@@ -60,6 +61,33 @@ const COL_MAP = {
   // notes
   notes: 'notes',
   note:  'notes',
+
+  // ── Kenya campus-manager fields ──────────────────────────────────────────
+  'row ref':              'row_ref',
+  'row reference':        'row_ref',
+  'row_ref':              'row_ref',
+  'asset name':           'asset_name',
+  'assetname':            'asset_name',
+  'physical location':    'physical_location',
+  'physicallocation':     'physical_location',
+  'procuring department': 'procuring_department',
+  'procuringdepartment':  'procuring_department',
+  'department':           'procuring_department',
+  'year of purchase':     'year_of_purchase',
+  'yearofpurchase':       'year_of_purchase',
+  'purchase year':        'year_of_purchase',
+  'years of service':     'years_of_service',
+  'yearsofservice':       'years_of_service',
+  'age bracket':          'age_bracket',
+  'agebracket':           'age_bracket',
+  'asset class':          'asset_class',
+  'assetclass':           'asset_class',
+  'document link':        'document_link',
+  'invoice link':         'document_link',
+  'document_link':        'document_link',
+  'pr ref':               'pr_ref',
+  'pr reference':         'pr_ref',
+  'pr_ref':               'pr_ref',
 };
 
 const VALID_INSURANCE_CLASSES = new Set([
@@ -123,12 +151,22 @@ const bulkImport = async (req, res) => {
         errors.push({ row: rowNum, reason: 'Missing School/Campus' });
         continue;
       }
-      if (!row.insuranceClass) {
+
+      // Determine campus region to apply region-specific rules
+      const campusRegion = await getCampusRegion(row.subsidiary).catch(() => 'South Africa');
+      const isKenya = campusRegion === 'Kenya';
+
+      // SA requires insuranceClass; Kenya uses asset_class
+      if (!isKenya && !row.insuranceClass) {
         errors.push({ row: rowNum, reason: 'Missing Insurance Class' });
         continue;
       }
-      if (!row.description) {
+      if (!isKenya && !row.description) {
         errors.push({ row: rowNum, reason: 'Missing Item Description' });
+        continue;
+      }
+      if (isKenya && !row.asset_name && !row.description) {
+        errors.push({ row: rowNum, reason: 'Missing Asset Name' });
         continue;
       }
       if (!row.unitPrice || isNaN(Number(row.unitPrice))) {
@@ -136,15 +174,17 @@ const bulkImport = async (req, res) => {
         continue;
       }
 
-      // Validate enum fields
-      if (!VALID_INSURANCE_CLASSES.has(row.insuranceClass)) {
+      // For Kenya, default insuranceClass to Business All Risk if not provided
+      const resolvedClass = row.insuranceClass || (isKenya ? 'Business All Risk' : null);
+
+      // Validate insurance class for SA
+      if (!isKenya && !VALID_INSURANCE_CLASSES.has(resolvedClass)) {
         errors.push({ row: rowNum, reason: `Unknown Insurance Class: "${row.insuranceClass}"` });
         continue;
       }
 
       const insuranceStatus = row.insuranceStatus || '';
       if (!VALID_STATUSES.has(insuranceStatus)) {
-        // Don't error — just blank it
         row.insuranceStatus = '';
       }
 
@@ -152,20 +192,38 @@ const bulkImport = async (req, res) => {
         String(row.isDuplicate || '').toLowerCase()
       );
 
+      // Auto-calculate years of service for Kenya if year_of_purchase present
+      let years_of_service = row.years_of_service ? Number(row.years_of_service) : null;
+      if (!years_of_service && row.year_of_purchase) {
+        const yos = new Date().getFullYear() - Number(row.year_of_purchase);
+        if (yos >= 0) years_of_service = yos;
+      }
+
       try {
         const asset = await Asset.create({
-          subsidiary:      row.subsidiary,
-          insuranceClass:  row.insuranceClass,
-          description:     row.description,
-          serialNumber:    row.serialNumber  || '',
-          quantity:        Number(row.quantity)  || 1,
-          unitPrice:       Number(row.unitPrice),
-          subLocation:     row.subLocation   || '',
-          insuranceStatus: row.insuranceStatus || '',
+          subsidiary:           row.subsidiary,
+          insuranceClass:       resolvedClass || '',
+          description:          row.description || row.asset_name || '',
+          serialNumber:         row.serialNumber  || '',
+          quantity:             Number(row.quantity)  || 1,
+          unitPrice:            Number(row.unitPrice),
+          subLocation:          row.subLocation   || '',
+          insuranceStatus:      isKenya ? 'Insured' : (row.insuranceStatus || ''),
           isDuplicate,
-          notes:           row.notes || '',
-          year:            new Date().getFullYear(),
-          createdBy:       req.user._id,
+          notes:                row.notes || '',
+          year:                 new Date().getFullYear(),
+          // Kenya fields
+          row_ref:              row.row_ref              || '',
+          asset_name:           row.asset_name           || row.description || '',
+          physical_location:    row.physical_location    || '',
+          procuring_department: row.procuring_department || '',
+          year_of_purchase:     row.year_of_purchase ? Number(row.year_of_purchase) : null,
+          years_of_service,
+          age_bracket:          row.age_bracket          || '',
+          asset_class:          row.asset_class          || '',
+          document_link:        row.document_link        || '',
+          pr_ref:               row.pr_ref               || '',
+          createdBy:            req.user._id,
         });
         inserted.push({ row: rowNum, assetId: asset.assetId, description: asset.description });
       } catch (err) {

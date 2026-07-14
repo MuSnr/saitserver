@@ -1,5 +1,6 @@
 const XLSX = require('xlsx');
 const InsuranceRecord = require('../models/InsuranceRecord');
+const { getCampusRegion } = require('../services/regionService');
 const logger = require('../services/logger');
 
 // ── Normalise header string for lookup ────────────────────────────────────────
@@ -70,6 +71,30 @@ const COL_MAP = {
   'notes':                              'notes',
   'note':                               'notes',
   'remarks':                            'notes',
+  // ── Kenya fields ──────────────────────────────────────────────────────────
+  'physical location':                  'physical_location',
+  'procuring department':               'procuring_department',
+  'department':                         'procuring_department',
+  'year of purchase':                   'year_of_purchase',
+  'purchase year':                      'year_of_purchase',
+  'years of service':                   'years_of_service',
+  'age bracket':                        'age_bracket',
+  'asset class':                        'asset_class',
+  'document link':                      'document_link',
+  'invoice link':                       'document_link',
+  'pr ref':                             'pr_ref',
+  'pr reference':                       'pr_ref',
+  'insurance priority':                 'insurance_priority',
+  'asset usage status':                 'asset_usage_status',
+  'ownership':                          'ownership',
+  'qty insured':                        'quantity_insured',
+  'quantity insured':                   'quantity_insured',
+  'qty retired':                        'quantity_retired',
+  'quantity retired':                   'quantity_retired',
+  'retired value':                      'retired_asset_value',
+  'insurable value':                    'insurable_value',
+  'status detail':                      'status_detail',
+  'comments':                           'comments',
 };
 
 // ── Insurance class aliases (Excel uses "Theft", model stores "Theft Section") ──
@@ -150,15 +175,32 @@ const bulkImportInsurance = async (req, res) => {
         errors.push({ row: rowNum, reason: 'Missing Subsidiary/Campus' }); continue;
       }
 
-      const resolvedClass = resolveClass(row.classOfInsurance);
+      // Determine region for this campus
+      const campusRegion = await getCampusRegion(row.subsidiary).catch(() => 'South Africa');
+      const isKenya = campusRegion === 'Kenya';
+
+      // SA requires classOfInsurance; Kenya uses asset_class instead
+      let resolvedClass = resolveClass(row.classOfInsurance);
       if (!resolvedClass) {
-        errors.push({
-          row: rowNum,
-          reason: row.classOfInsurance
-            ? `Unknown Insurance Class: "${row.classOfInsurance}"`
-            : 'Missing Class of Insurance',
-        });
-        continue;
+        if (isKenya) {
+          // For Kenya, use asset_class or default
+          resolvedClass = row.asset_class || 'Business All Risk';
+        } else {
+          errors.push({
+            row: rowNum,
+            reason: row.classOfInsurance
+              ? `Unknown Insurance Class: "${row.classOfInsurance}"`
+              : 'Missing Class of Insurance',
+          });
+          continue;
+        }
+      }
+
+      // Auto-calculate years_of_service for Kenya
+      let years_of_service = row.years_of_service ? Number(row.years_of_service) : null;
+      if (!years_of_service && row.year_of_purchase) {
+        const yos = new Date().getFullYear() - Number(row.year_of_purchase);
+        if (yos >= 0) years_of_service = yos;
       }
 
       const matchedStatus = [...VALID_STATUSES].find(
@@ -186,10 +228,28 @@ const bulkImportInsurance = async (req, res) => {
         rate:                parseCurrency(row.rate),
         annualPremium:       annualPremiumVal,
         premiumYear,
-        december2025Premium: annualPremiumVal,   // keep legacy field in sync
+        december2025Premium: annualPremiumVal,
         interestNoted:       row.interestNoted   || '',
         vendor:              row.vendor          || '',
         notes:               row.notes           || '',
+        // Kenya fields
+        physical_location:   row.physical_location    || '',
+        procuring_department:row.procuring_department || '',
+        year_of_purchase:    row.year_of_purchase ? Number(row.year_of_purchase) : null,
+        years_of_service,
+        age_bracket:         row.age_bracket          || '',
+        asset_class:         row.asset_class          || '',
+        document_link:       row.document_link        || '',
+        pr_ref:              row.pr_ref               || '',
+        insurance_priority:  row.insurance_priority   || '',
+        asset_usage_status:  row.asset_usage_status   || '',
+        ownership:           row.ownership            || '',
+        quantity_insured:    row.quantity_insured    ? Number(row.quantity_insured)    : 0,
+        quantity_retired:    row.quantity_retired    ? Number(row.quantity_retired)    : 0,
+        retired_asset_value: row.retired_asset_value ? Number(row.retired_asset_value) : 0,
+        insurable_value:     row.insurable_value     ? Number(row.insurable_value)     : 0,
+        status_detail:       row.status_detail       || '',
+        comments:            row.comments            || '',
         createdBy:           req.user._id,
       });
     }

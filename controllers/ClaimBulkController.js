@@ -30,7 +30,7 @@ const COL_MAP = {
   'folder link': 'folderLink', folderlink: 'folderLink', folder: 'folderLink',
 };
 
-const VALID_STATUSES = new Set(['Pending', 'Paid Out', 'Rejected', 'Withdrawn', 'Lodged']);
+const VALID_STATUSES = new Set(['Internal WIP', 'Lodged', 'Paid Out', 'Rejected', 'Withdrawn', 'Below Minimum Excess', 'Pending']);
 
 const parseDate = (val) => {
   if (!val) return null;
@@ -83,15 +83,17 @@ const bulkImportClaims = async (req, res) => {
       if (!incidentDate)   { errors.push({ row: rowNum, reason: `Invalid Date of Incident: "${row.dateOfIncident}"` }); continue; }
       if (!submissionDate) { errors.push({ row: rowNum, reason: `Invalid Date of Submission: "${row.dateOfSubmission}"` }); continue; }
 
-      const claimStatus = row.claimStatus || 'Pending';
-      if (!VALID_STATUSES.has(claimStatus)) {
+      const claimStatus = row.claimStatus || 'Internal WIP';
+      // Accept legacy 'Pending' and map to 'Internal WIP'
+      const resolvedStatus = claimStatus === 'Pending' ? 'Internal WIP' : claimStatus;
+      if (!VALID_STATUSES.has(resolvedStatus)) {
         errors.push({ row: rowNum, reason: `Unknown status: "${claimStatus}"` }); continue;
       }
 
       try {
         const claim = await Claim.create({
           subsidiary:          row.subsidiary,
-          claimStatus,
+          claimStatus:         resolvedStatus,
           dateOfIncident:      incidentDate,
           dateOfSubmission:    submissionDate,
           dateOfSettlement:    settlementDate,
@@ -133,7 +135,7 @@ const downloadClaimsTemplate = (req, res) => {
     'Incident Form Link', 'Claim Form Link', 'Discharge Voucher Link', 'Folder Link',
   ];
   const sample = [
-    'Ruimsig', 'Pending', '2025-01-15', '2025-01-20', '', '50000.00',
+    'Ruimsig', 'Internal WIP', '2025-01-15', '2025-01-20', '', '50000.00',
     'Stolen chromebooks from Grade 4 classroom', 'Police case opened — case no. 12345',
     '', '', '', '',
   ];
@@ -147,7 +149,7 @@ const downloadClaimsTemplate = (req, res) => {
   const legendHeaders = ['Column', 'Required', 'Notes'];
   const legend = [
     ['Campus / Subsidiary',       'YES', 'Must match a campus name in the system'],
-    ['Claim Status',              'NO',  'Pending | Paid Out | Rejected | Withdrawn | Lodged — default: Pending'],
+    ['Claim Status',              'NO',  'Internal WIP | Lodged | Paid Out | Rejected | Withdrawn | Below Minimum Excess — default: Internal WIP'],
     ['Date of Incident',          'YES', 'YYYY-MM-DD format e.g. 2025-01-15'],
     ['Date of Claim Submission',  'YES', 'YYYY-MM-DD format'],
     ['Date of Settlement',        'NO',  'YYYY-MM-DD — leave blank if not yet settled'],

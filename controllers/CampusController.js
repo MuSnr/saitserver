@@ -7,10 +7,12 @@ const getCampuses = async (req, res) => {
     let filter = {};
 
     if (user.role === 'super_admin') {
-      // Super admin sees everything — no filter
-      filter = {};
+      // super_admin: respect ?region query param for profile switching
+      // If no param provided, return all campuses (global view)
+      if (req.query.region) {
+        filter = { region: req.query.region };
+      }
     } else if (user.role === 'campus_manager') {
-      // Campus manager only sees their own campus
       filter = { name: user.campus };
     } else {
       // admin / viewer — scope to their region only
