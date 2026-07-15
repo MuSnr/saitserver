@@ -230,7 +230,9 @@ const inviteUser = async (req, res) => {
     }
 
     // Create with a random placeholder password — user will replace it via invite link
-    const placeholder = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 12);
+    // Use only 4 bcrypt rounds — this is a throwaway placeholder the user can never use
+    // (account only accessible via the 7-day invite link, not by knowing this password)
+    const placeholder = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 4);
 
     // Generate invite token (reuses the reset-password mechanism)
     const rawToken = crypto.randomBytes(32).toString('hex');
