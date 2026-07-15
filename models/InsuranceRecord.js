@@ -95,5 +95,7 @@ const insuranceRecordSchema = new mongoose.Schema(
 insuranceRecordSchema.index({ subsidiary: 1, classOfInsurance: 1 });
 insuranceRecordSchema.index({ serialNumber: 1 });
 insuranceRecordSchema.index({ linkedAssetId: 1 });
+insuranceRecordSchema.index({ subsidiary: 1, status: 1 });  // dashboard + register filter
+insuranceRecordSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model('InsuranceRecord', insuranceRecordSchema);

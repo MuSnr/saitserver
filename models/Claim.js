@@ -61,4 +61,9 @@ claimSchema.pre('save', async function() {
   }
 });
 
+// Indexes for fast filtering by campus, status, and date
+claimSchema.index({ subsidiary: 1, claimStatus: 1 });
+claimSchema.index({ subsidiary: 1, dateOfIncident: -1 });
+claimSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('Claim', claimSchema);

@@ -83,5 +83,7 @@ assetSchema.pre('save', async function() {
 assetSchema.index({ subsidiary: 1, insuranceClass: 1 });
 assetSchema.index({ serialNumber: 1 });
 assetSchema.index({ linkedInsuranceRecordId: 1 });
+assetSchema.index({ createdAt: -1 });
+assetSchema.index({ subsidiary: 1, isDuplicate: 1, createdAt: -1 }); // dashboard aggregation
 
 module.exports = mongoose.model('Asset', assetSchema);
