@@ -59,6 +59,83 @@ const getIncidentById = async (req, res) => {
   }
 };
 
+// ── POST /api/incidents/public — no auth, employee-facing form ───────────────
+const createPublicIncident = async (req, res) => {
+  try {
+    const {
+      reporter_name, reporter_email, campus_name,
+      incident_date_time, timing_type, description, incident_type,
+    } = req.body;
+
+    if (!reporter_name || !reporter_email || !campus_name ||
+        !incident_date_time || !timing_type || !description || !incident_type) {
+      return res.status(400).json({
+        success: false,
+        message: 'reporter_name, reporter_email, campus_name, incident_date_time, timing_type, description and incident_type are required.',
+      });
+    }
+
+    // Look up campus by name to get _id
+    const campus = await Campus.findOne({ name: campus_name }).lean();
+    if (!campus) {
+      return res.status(422).json({ success: false, message: `Campus "${campus_name}" not found.` });
+    }
+
+    const incident = await IncidentNotification.create({
+      reporter_name,
+      reporter_email,
+      campus_id:                campus._id,
+      incident_date_time,
+      timing_type,
+      description,
+      incident_type,
+      duty_station_detail:      req.body.duty_station_detail      || '',
+      incident_location_type:   req.body.incident_location_type   || 'On NP Property',
+      exact_location:           req.body.exact_location           || '',
+      people_involved:          req.body.people_involved          || '',
+      involvement_description:  req.body.involvement_description  || '',
+      injured_persons:          req.body.injured_persons          || '',
+      injury_description:       req.body.injury_description       || '',
+      injury_actions_taken:     req.body.injury_actions_taken     || '',
+      property_damage_type:     req.body.property_damage_type     || 'None',
+      property_description:     req.body.property_description     || '',
+      damage_description:       req.body.damage_description       || '',
+      prevention_actions:       req.body.prevention_actions       || '',
+      post_incident_actions:    req.body.post_incident_actions    || '',
+      additional_comments:      req.body.additional_comments      || '',
+      notifications_list:       req.body.notifications_list       || '',
+      status: 'New',
+    });
+
+    logger.info(`Public incident submitted: ${incident.incident_ref} from ${reporter_email} at ${campus_name}`);
+
+    // Bell notification for admins in this region
+    if (campus.region === 'Kenya') {
+      User.updateMany(
+        { role: { $in: ['admin', 'super_admin'] }, region: 'Kenya', status: 'active' },
+        { $inc: { unreadNotifications: 1 } }
+      ).catch((e) => logger.warn(`Bell notification failed: ${e.message}`));
+    } else {
+      User.updateMany(
+        { role: { $in: ['admin', 'super_admin'] }, region: 'South Africa', status: 'active' },
+        { $inc: { unreadNotifications: 1 } }
+      ).catch((e) => logger.warn(`Bell notification failed: ${e.message}`));
+    }
+
+    const populated = await IncidentNotification.findById(incident._id)
+      .populate('campus_id', 'name region');
+
+    return res.status(201).json({
+      success: true,
+      message: 'Incident report submitted successfully.',
+      incident: { incident_ref: incident.incident_ref, _id: incident._id },
+    });
+  } catch (err) {
+    logger.error('Create public incident error:', err);
+    return res.status(500).json({ success: false, message: 'Error submitting incident report.' });
+  }
+};
+
 // ── POST /api/incidents ───────────────────────────────────────────────────────
 const createIncident = async (req, res) => {
   try {
@@ -249,6 +326,7 @@ module.exports = {
   getIncidents,
   getIncidentById,
   createIncident,
+  createPublicIncident,
   updateIncident,
   deleteIncident,
   convertToClaim,

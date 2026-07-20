@@ -4,6 +4,7 @@ const multer  = require('multer');
 const {
   getIncidents, getIncidentById, createIncident,
   updateIncident, deleteIncident, convertToClaim,
+  createPublicIncident,
 } = require('../controllers/IncidentController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -17,11 +18,15 @@ const upload = multer({
   },
 });
 
-router.get('/',                protect, getIncidents);
-router.get('/:id',             protect, getIncidentById);
-router.post('/',               protect, authorize('admin', 'campus_manager'), upload.array('evidence', 10), createIncident);
-router.put('/:id',             protect, authorize('admin', 'campus_manager'), updateIncident);
+// ── Public — no auth required (employee incident form) ────────────────────────
+router.post('/public', createPublicIncident);
+
+// ── Protected ─────────────────────────────────────────────────────────────────
+router.get('/',               protect, getIncidents);
+router.get('/:id',            protect, getIncidentById);
+router.post('/',              protect, authorize('admin', 'campus_manager'), upload.array('evidence', 10), createIncident);
+router.put('/:id',            protect, authorize('admin', 'campus_manager'), updateIncident);
 router.post('/:id/convert',   protect, authorize('admin', 'campus_manager'), convertToClaim);
-router.delete('/:id',          protect, authorize('admin'), deleteIncident);
+router.delete('/:id',         protect, authorize('admin'), deleteIncident);
 
 module.exports = router;
