@@ -43,7 +43,7 @@ router.post('/upload-document',
       if (!process.env.CLOUDINARY_CLOUD_NAME) {
         return res.status(503).json({ success: false, message: 'File upload not configured. Use a URL link instead.' });
       }
-      const url = await uploadToCloudinary(req.file.buffer, req.file.originalname, 'sait/documents');
+      const url = await uploadToCloudinary(req.file.buffer, req.file.originalname, req.file.mimetype, 'sait/documents');
       return res.status(200).json({ success: true, url });
     } catch (err) {
       logger.error('Document upload error:', err);
