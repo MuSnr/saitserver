@@ -35,9 +35,11 @@ async function uploadToCloudinary(buffer, originalName, mimetype, folder = 'sait
 
   return new Promise((resolve, reject) => {
     const uploadOptions = {
+      folder: isPdf ? undefined : 'sait/documents', // folder via public_id for PDFs
       resource_type: resourceType,
       use_filename:  true,
       unique_filename: true,
+      access_mode: 'public',       // ensure public access — no auth required to view
       // For PDFs: ensure they open inline in browser, not downloaded
       ...(isPdf && { flags: 'attachment:false' }),
       ...(publicId && { public_id: publicId, use_filename: false }),
