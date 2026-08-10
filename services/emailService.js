@@ -2,11 +2,10 @@ const nodemailer = require('nodemailer');
 const { Resend } = require('resend');
 const logger = require('./logger');
 
-// ── Resend (primary — reliable on Vercel serverless) ─────────────────────────
-const resendClient = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-// ── Nodemailer fallback (local dev / when Resend not configured) ──────────────
-const createTransporter = () => nodemailer.createTransport({
+// ── Gmail SMTP (local dev + production fallback) ──────────────────────────────
+const createGmailTransporter = () => nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
@@ -14,27 +13,32 @@ const createTransporter = () => nodemailer.createTransport({
   tls: { rejectUnauthorized: false },
 });
 
-const FROM_EMAIL = process.env.FROM_EMAIL || process.env.GMAIL_USER || 'noreply@novapioneer.com';
 const FROM_NAME  = 'SAIT · Nova Pioneer';
 
 // ── Shared send helper ────────────────────────────────────────────────────────
+// Uses Resend API on production (Vercel), Gmail SMTP locally
 async function sendEmail({ to, subject, html }) {
-  if (resendClient) {
-    const { error } = await resendClient.emails.send({
-      from: `${FROM_NAME} <${FROM_EMAIL}>`,
+  if (resend) {
+    // Resend API — works on Vercel serverless, delivers to inbox
+    // From: uses verified sender. Until domain verified, uses onboarding@resend.dev
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    const { data, error } = await resend.emails.send({
+      from: `${FROM_NAME} <${fromEmail}>`,
       to,
       subject,
       html,
+      reply_to: process.env.GMAIL_USER, // replies go to corporate email
     });
     if (error) throw new Error(error.message);
-    logger.info(`Email sent via Resend to ${to}: ${subject}`);
+    logger.info(`Email sent via Resend to ${to} (ID: ${data?.id}): ${subject}`);
   } else {
-    const transporter = createTransporter();
+    // Gmail SMTP fallback
+    const transporter = createGmailTransporter();
     await transporter.sendMail({
       from: `"${FROM_NAME}" <${process.env.GMAIL_USER}>`,
       to, subject, html,
     });
-    logger.info(`Email sent via Nodemailer to ${to}: ${subject}`);
+    logger.info(`Email sent via Gmail to ${to}: ${subject}`);
   }
 }
 
