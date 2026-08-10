@@ -12,7 +12,7 @@ const createTransporter = () => nodemailer.createTransport({
   tls: { rejectUnauthorized: false },
 });
 
-const FROM_NAME = 'SAIT · Nova Pioneer';
+const FROM_NAME = 'Nova Pioneer — SAIT Platform';
 
 async function sendEmail({ to, subject, html }) {
   const transporter = createTransporter();
