@@ -88,8 +88,35 @@ app.get('/health', (req, res) => {
       MONGO_URI: process.env.MONGO_URI ? 'set' : 'MISSING',
       JWT_SECRET: process.env.JWT_SECRET ? 'set' : 'MISSING',
       ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'missing',
+      GMAIL_USER: process.env.GMAIL_USER || 'MISSING',
+      GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD ? 'set' : 'MISSING',
     },
   });
+});
+
+// ── Email diagnostic endpoint (no auth — for debugging only) ─────────────────
+app.get('/test-email', async (req, res) => {
+  const nodemailer = require('nodemailer');
+  const to = req.query.to || process.env.GMAIL_USER;
+  try {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
+      tls: { rejectUnauthorized: false },
+    });
+    await transporter.verify();
+    await transporter.sendMail({
+      from: `"SAIT Test" <${process.env.GMAIL_USER}>`,
+      to,
+      subject: 'SAIT — Production Email Test',
+      text: `Email working from Vercel production. Sent to: ${to}`,
+    });
+    res.json({ success: true, message: `Test email sent to ${to}`, from: process.env.GMAIL_USER });
+  } catch (err) {
+    res.json({ success: false, error: err.message, code: err.code, from: process.env.GMAIL_USER });
+  }
 });
 
 // ── MongoDB lazy connection ───────────────────────────────────────────────────
