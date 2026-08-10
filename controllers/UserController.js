@@ -254,15 +254,24 @@ const inviteUser = async (req, res) => {
 
     const inviteUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${rawToken}`;
 
-    // Send invite email fire-and-forget — never block the HTTP response
+    // Send invite email — await so failures are visible
     const { sendInviteEmail } = require('../services/emailService');
-    sendInviteEmail(user.email, user.name, inviteUrl, req.user.name)
-      .catch((emailErr) => logger.warn(`Invite email failed for ${email}: ${emailErr.message}`));
+    let emailError = null;
+    try {
+      await sendInviteEmail(user.email, user.name, inviteUrl, req.user.name);
+      logger.info(`Invite email sent to ${email} by ${req.user.email}`);
+    } catch (emailErr) {
+      emailError = emailErr.message;
+      logger.error(`Invite email FAILED for ${email}: ${emailErr.message}`);
+    }
 
     logger.info(`Admin ${req.user.email} invited user: ${email}`);
     return res.status(201).json({
       success: true,
-      message: `Invitation sent to ${email}. They will receive an email to set their password.`,
+      message: emailError
+        ? `User created but email failed: ${emailError}. Share the link manually.`
+        : `Invitation sent to ${email}. They will receive an email to set their password.`,
+      inviteUrl: emailError ? inviteUrl : undefined, // expose link if email failed
       user: sanitizeUser(user),
     });
   } catch (err) {
