@@ -142,81 +142,120 @@ const proxyPdf = async (req, res) => {
     const template = await ClaimTemplate.findById(req.params.id);
     if (!template) return res.status(404).json({ success: false, message: 'Template not found.' });
 
-    logger.info(`PDF proxy: fetching ${template.cloudinaryId} url=${template.cloudinaryUrl}`);
+    // The file was uploaded as 'authenticated' type — use Cloudinary's
+    // explicit download API which uses API key/secret (server-to-server, no HTTP fetch)
+    const result = await cloudinary.api.resource(
+      template.cloudinaryId,
+      { resource_type: 'raw', type: 'authenticated' }
+    ).catch(() =>
+      // fallback: try 'upload' type
+      cloudinary.api.resource(template.cloudinaryId, { resource_type: 'raw', type: 'upload' })
+    );
 
-    // Use cloudinary.api.resource to get a fresh download URL, then fetch it
-    const https = require('https');
-    const http  = require('http');
-
-    const fetchUrl = (url) => new Promise((resolve, reject) => {
-      const urlObj = new URL(url);
-      const client = urlObj.protocol === 'https:' ? https : http;
-      const req2 = client.get(url, (response) => {
-        // Follow redirects
-        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
-          return fetchUrl(response.headers.location).then(resolve).catch(reject);
-        }
-        if (response.statusCode !== 200) {
-          response.resume();
-          return reject(new Error(`HTTP ${response.statusCode} from ${url}`));
-        }
-        const chunks = [];
-        response.on('data', (chunk) => chunks.push(chunk));
-        response.on('end', () => resolve(Buffer.concat(chunks)));
-        response.on('error', reject);
-      });
-      req2.on('error', reject);
-      req2.setTimeout(30000, () => { req2.destroy(); reject(new Error('Timeout')); });
+    // Generate a short-lived signed delivery URL using 'authenticated' type
+    const deliveryUrl = cloudinary.url(template.cloudinaryId, {
+      resource_type: 'raw',
+      type: 'authenticated',
+      sign_url: true,
+      secure: true,
+      expires_at: Math.floor(Date.now() / 1000) + 300, // 5 min
     });
 
-    let pdfBuffer;
+    logger.info(`PDF proxy: delivery URL = ${deliveryUrl.substring(0, 120)}`);
 
-    // Strategy 1: try the stored cloudinaryUrl directly (works if public)
-    try {
-      pdfBuffer = await fetchUrl(template.cloudinaryUrl);
-      logger.info(`PDF proxy: direct URL worked for ${template.cloudinaryId}`);
-    } catch (e1) {
-      logger.warn(`PDF proxy: direct URL failed (${e1.message}), trying signed URL`);
-
-      // Strategy 2: generate a signed URL
-      try {
-        const signedUrl = cloudinary.url(template.cloudinaryId, {
-          resource_type: 'raw',
-          type: 'upload',
-          sign_url: true,
-          secure: true,
-          expires_at: Math.floor(Date.now() / 1000) + 3600,
+    // Fetch with the signed authenticated URL
+    const https = require('https');
+    const pdfBuffer = await new Promise((resolve, reject) => {
+      const doFetch = (url, redirectCount = 0) => {
+        if (redirectCount > 5) return reject(new Error('Too many redirects'));
+        const req2 = https.get(url, (response) => {
+          if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+            return doFetch(response.headers.location, redirectCount + 1);
+          }
+          if (response.statusCode !== 200) {
+            response.resume();
+            return reject(new Error(`HTTP ${response.statusCode}`));
+          }
+          const chunks = [];
+          response.on('data', (c) => chunks.push(c));
+          response.on('end', () => resolve(Buffer.concat(chunks)));
+          response.on('error', reject);
         });
-        logger.info(`PDF proxy: signed URL = ${signedUrl.substring(0, 100)}...`);
-        pdfBuffer = await fetchUrl(signedUrl);
-        logger.info(`PDF proxy: signed URL worked`);
-      } catch (e2) {
-        logger.error(`PDF proxy: signed URL also failed (${e2.message})`);
-
-        // Strategy 3: use cloudinary.api.resource to get secure_url then fetch
-        try {
-          const resource = await cloudinary.api.resource(template.cloudinaryId, { resource_type: 'raw' });
-          logger.info(`PDF proxy: resource API url = ${resource.secure_url}`);
-          pdfBuffer = await fetchUrl(resource.secure_url);
-        } catch (e3) {
-          logger.error(`PDF proxy: all strategies failed. Last error: ${e3.message}`);
-          return res.status(500).json({
-            success: false,
-            message: 'Could not fetch PDF from storage.',
-            debug: `${e1.message} | ${e2.message} | ${e3.message}`,
-          });
-        }
-      }
-    }
+        req2.on('error', reject);
+        req2.setTimeout(30000, () => { req2.destroy(); reject(new Error('Timeout')); });
+      };
+      doFetch(deliveryUrl);
+    });
 
     res.set('Content-Type', 'application/pdf');
     res.set('Content-Disposition', `inline; filename="${template.name}.pdf"`);
-    res.set('Cache-Control', 'private, max-age=3600');
+    res.set('Cache-Control', 'private, max-age=300');
     return res.send(pdfBuffer);
   } catch (err) {
-    logger.error('Proxy PDF error:', err);
+    logger.error('Proxy PDF error:', err.message);
     return res.status(500).json({ success: false, message: 'Error fetching PDF: ' + err.message });
   }
 };
 
-module.exports = { getTemplates, createTemplate, updateTemplate, deleteTemplate, proxyPdf };
+// POST /api/claim-templates/:id/republish — re-upload existing PDF as public type
+const republishTemplate = async (req, res) => {
+  try {
+    const template = await ClaimTemplate.findById(req.params.id);
+    if (!template) return res.status(404).json({ success: false, message: 'Template not found.' });
+
+    // Download the file using authenticated access via Cloudinary API
+    // cloudinary.api.resource gives us the bytes via a private download URL
+    const resource = await cloudinary.api.resource(
+      template.cloudinaryId,
+      { resource_type: 'raw', type: 'authenticated' }
+    );
+
+    // Generate an authenticated private download URL
+    const privateUrl = cloudinary.utils.private_download_url(
+      template.cloudinaryId, 'pdf',
+      { resource_type: 'raw', type: 'authenticated', expires_at: Math.floor(Date.now() / 1000) + 300 }
+    );
+
+    // Fetch the file bytes using the private download URL (includes auth signature)
+    const https = require('https');
+    const pdfBytes = await new Promise((resolve, reject) => {
+      const doFetch = (url, hops = 0) => {
+        if (hops > 5) return reject(new Error('Too many redirects'));
+        https.get(url, (r) => {
+          if (r.statusCode >= 300 && r.statusCode < 400 && r.headers.location) {
+            return doFetch(r.headers.location, hops + 1);
+          }
+          if (r.statusCode !== 200) { r.resume(); return reject(new Error(`HTTP ${r.statusCode}`)); }
+          const chunks = []; r.on('data', c => chunks.push(c)); r.on('end', () => resolve(Buffer.concat(chunks))); r.on('error', reject);
+        }).on('error', reject);
+      };
+      doFetch(privateUrl);
+    });
+
+    // Re-upload as public
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { resource_type: 'raw', folder: 'claim-templates', format: 'pdf', type: 'upload', access_mode: 'public', public_id: template.cloudinaryId.replace('claim-templates/', '') + '_pub' },
+        (err, r) => err ? reject(err) : resolve(r)
+      );
+      stream.end(pdfBytes);
+    });
+
+    // Delete old authenticated version
+    await cloudinary.uploader.destroy(template.cloudinaryId, { resource_type: 'raw', type: 'authenticated' }).catch(() => {});
+
+    // Update template with new public URL
+    await ClaimTemplate.findByIdAndUpdate(template._id, {
+      cloudinaryUrl: result.secure_url,
+      cloudinaryId:  result.public_id,
+    });
+
+    logger.info(`Template ${template._id} republished as public: ${result.public_id}`);
+    return res.status(200).json({ success: true, message: 'Template republished as public.', url: result.secure_url });
+  } catch (err) {
+    logger.error('Republish error:', err.message);
+    return res.status(500).json({ success: false, message: 'Republish failed: ' + err.message });
+  }
+};
+
+module.exports = { getTemplates, createTemplate, updateTemplate, deleteTemplate, proxyPdf, republishTemplate };
