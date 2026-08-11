@@ -26,6 +26,7 @@ const sanitizeUser = (user) => ({
   lastLogin: user.lastLogin,
   createdAt: user.createdAt,
   unreadNotifications: user.unreadNotifications || 0,
+  pendingInviteUrl: user.pendingInviteUrl || '',
 });
 
 // ── Register ──────────────────────────────────────────────────────────────────
@@ -238,6 +239,8 @@ const inviteUser = async (req, res) => {
     const rawToken = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
 
+    const inviteUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${rawToken}`;
+
     const user = await User.create({
       name,
       email: email.toLowerCase().trim(),
@@ -245,14 +248,13 @@ const inviteUser = async (req, res) => {
       role: role || 'viewer',
       region: region || req.user.region || 'South Africa',
       campus: campus || '',
-      status: 'active',           // active immediately — just needs to set password
+      status: 'active',
       verifiedBy: req.user._id,
       verifiedAt: new Date(),
       resetPasswordToken:   hashedToken,
-      resetPasswordExpires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+      resetPasswordExpires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      pendingInviteUrl:     inviteUrl,   // stored so admin can retrieve anytime
     });
-
-    const inviteUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${rawToken}`;
 
     // Send invite email — await so failures are visible
     const { sendInviteEmail } = require('../services/emailService');
@@ -269,9 +271,10 @@ const inviteUser = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: emailError
-        ? `User created but email failed: ${emailError}. Share the link manually.`
-        : `Invitation sent to ${email}. They will receive an email to set their password.`,
-      inviteUrl: emailError ? inviteUrl : undefined, // expose link if email failed
+        ? `User created but email failed: ${emailError}`
+        : `Invitation sent to ${email}.`,
+      inviteUrl,   // always returned so frontend can show QR + link
+      emailSent: !emailError,
       user: sanitizeUser(user),
     });
   } catch (err) {
