@@ -517,6 +517,26 @@ const changePassword = async (req, res) => {
   }
 };
 
+// ── Get / Save signature ──────────────────────────────────────────────────────
+
+// GET /api/users/signature
+const getSignature = async (req, res) => {
+  return res.status(200).json({ success: true, signature: req.user.savedSignature || '' });
+};
+
+// PUT /api/users/signature
+const saveSignature = async (req, res) => {
+  try {
+    const { signature } = req.body;
+    if (!signature) return res.status(400).json({ success: false, message: 'Signature data required.' });
+    await User.findByIdAndUpdate(req.user._id, { savedSignature: signature });
+    return res.status(200).json({ success: true, message: 'Signature saved.' });
+  } catch (err) {
+    logger.error('Save signature error:', err);
+    return res.status(500).json({ success: false, message: 'Error saving signature.' });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -530,4 +550,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   changePassword,
+  getSignature,
+  saveSignature,
 };

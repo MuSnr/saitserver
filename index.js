@@ -31,6 +31,7 @@ const subCampusRoutes = require('./routes/subCampusRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const reconciliationRoutes = require('./routes/reconciliationRoutes');
 const incidentRoutes = require('./routes/incidentRoutes');
+const claimTemplateRoutes = require('./routes/claimTemplateRoutes');
 
 const app = express();
 
@@ -191,6 +192,7 @@ app.use('/api/sub-campuses', subCampusRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/reconciliation', reconciliationRoutes);
 app.use('/api/incidents', incidentRoutes);
+app.use('/api/claim-templates', claimTemplateRoutes);
 
 // ── 404 handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {

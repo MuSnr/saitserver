@@ -24,11 +24,14 @@ const userSchema = new mongoose.Schema(
     // Password reset
     resetPasswordToken: { type: String, select: false },
     resetPasswordExpires: { type: Date, select: false },
+    // Invite link — stored so admin can retrieve it anytime
+    pendingInviteUrl: { type: String, default: '' },
     // Account verification by admin
     verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     verifiedAt: { type: Date, default: null },
     lastLogin: { type: Date, default: null },
     unreadNotifications: { type: Number, default: 0 },
+    savedSignature: { type: String, default: '' },  // base64 PNG — user's saved signature
   },
   { timestamps: true }
 );

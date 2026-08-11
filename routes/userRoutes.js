@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   register, login, getMe, getUsers, createUser, inviteUser,
   updateUser, deleteUser, approveUser, forgotPassword, resetPassword, changePassword,
+  getSignature, saveSignature,
 } = require('../controllers/UserController');
 const { markNotificationsRead } = require('../controllers/IncidentController');
 const { protect, authorize } = require('../middleware/auth');
@@ -18,6 +19,8 @@ router.post('/reset-password/:token', resetPassword);
 router.get('/me', protect, getMe);
 router.put('/change-password', protect, changePassword);
 router.put('/notifications/read', protect, markNotificationsRead);
+router.get('/signature',  protect, getSignature);
+router.put('/signature',  protect, saveSignature);
 
 // ── Admin ─────────────────────────────────────────────────────────────────────
 router.get('/', protect, authorize('admin'), getUsers);
