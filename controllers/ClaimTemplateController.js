@@ -142,17 +142,44 @@ const proxyPdf = async (req, res) => {
     const template = await ClaimTemplate.findById(req.params.id);
     if (!template) return res.status(404).json({ success: false, message: 'Template not found.' });
 
-    // Fetch from Cloudinary server-side (no CORS, full access)
-    const axios = require('axios');
-    const response = await axios.get(template.cloudinaryUrl, {
-      responseType: 'arraybuffer',
-      timeout: 30000,
-    });
+    // Use cloudinary API to generate a signed URL or fetch directly
+    // Try fetching with cloudinary admin API first (works regardless of access_mode)
+    let pdfBuffer;
+    try {
+      // Generate a signed download URL via cloudinary SDK
+      const signedUrl = cloudinary.url(template.cloudinaryId, {
+        resource_type: 'raw',
+        type: 'upload',
+        sign_url: true,
+        expires_at: Math.floor(Date.now() / 1000) + 3600,
+      });
+
+      const https = require('https');
+      const http  = require('http');
+      pdfBuffer = await new Promise((resolve, reject) => {
+        const urlObj = new URL(signedUrl);
+        const client = urlObj.protocol === 'https:' ? https : http;
+        client.get(signedUrl, (response) => {
+          if (response.statusCode !== 200) {
+            reject(new Error(`Cloudinary fetch failed: ${response.statusCode}`));
+            response.resume();
+            return;
+          }
+          const chunks = [];
+          response.on('data', (chunk) => chunks.push(chunk));
+          response.on('end', () => resolve(Buffer.concat(chunks)));
+          response.on('error', reject);
+        }).on('error', reject);
+      });
+    } catch (fetchErr) {
+      logger.error('Cloudinary signed URL fetch failed:', fetchErr.message);
+      return res.status(500).json({ success: false, message: 'Could not fetch PDF from storage.' });
+    }
 
     res.set('Content-Type', 'application/pdf');
-    res.set('Content-Disposition', 'inline');
+    res.set('Content-Disposition', `inline; filename="${template.name}.pdf"`);
     res.set('Cache-Control', 'private, max-age=3600');
-    return res.send(Buffer.from(response.data));
+    return res.send(pdfBuffer);
   } catch (err) {
     logger.error('Proxy PDF error:', err);
     return res.status(500).json({ success: false, message: 'Error fetching PDF.' });
