@@ -142,38 +142,71 @@ const proxyPdf = async (req, res) => {
     const template = await ClaimTemplate.findById(req.params.id);
     if (!template) return res.status(404).json({ success: false, message: 'Template not found.' });
 
-    // Use cloudinary API to generate a signed URL or fetch directly
-    // Try fetching with cloudinary admin API first (works regardless of access_mode)
-    let pdfBuffer;
-    try {
-      // Generate a signed download URL via cloudinary SDK
-      const signedUrl = cloudinary.url(template.cloudinaryId, {
-        resource_type: 'raw',
-        type: 'upload',
-        sign_url: true,
-        expires_at: Math.floor(Date.now() / 1000) + 3600,
-      });
+    logger.info(`PDF proxy: fetching ${template.cloudinaryId} url=${template.cloudinaryUrl}`);
 
-      const https = require('https');
-      const http  = require('http');
-      pdfBuffer = await new Promise((resolve, reject) => {
-        const urlObj = new URL(signedUrl);
-        const client = urlObj.protocol === 'https:' ? https : http;
-        client.get(signedUrl, (response) => {
-          if (response.statusCode !== 200) {
-            reject(new Error(`Cloudinary fetch failed: ${response.statusCode}`));
-            response.resume();
-            return;
-          }
-          const chunks = [];
-          response.on('data', (chunk) => chunks.push(chunk));
-          response.on('end', () => resolve(Buffer.concat(chunks)));
-          response.on('error', reject);
-        }).on('error', reject);
+    // Use cloudinary.api.resource to get a fresh download URL, then fetch it
+    const https = require('https');
+    const http  = require('http');
+
+    const fetchUrl = (url) => new Promise((resolve, reject) => {
+      const urlObj = new URL(url);
+      const client = urlObj.protocol === 'https:' ? https : http;
+      const req2 = client.get(url, (response) => {
+        // Follow redirects
+        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+          return fetchUrl(response.headers.location).then(resolve).catch(reject);
+        }
+        if (response.statusCode !== 200) {
+          response.resume();
+          return reject(new Error(`HTTP ${response.statusCode} from ${url}`));
+        }
+        const chunks = [];
+        response.on('data', (chunk) => chunks.push(chunk));
+        response.on('end', () => resolve(Buffer.concat(chunks)));
+        response.on('error', reject);
       });
-    } catch (fetchErr) {
-      logger.error('Cloudinary signed URL fetch failed:', fetchErr.message);
-      return res.status(500).json({ success: false, message: 'Could not fetch PDF from storage.' });
+      req2.on('error', reject);
+      req2.setTimeout(30000, () => { req2.destroy(); reject(new Error('Timeout')); });
+    });
+
+    let pdfBuffer;
+
+    // Strategy 1: try the stored cloudinaryUrl directly (works if public)
+    try {
+      pdfBuffer = await fetchUrl(template.cloudinaryUrl);
+      logger.info(`PDF proxy: direct URL worked for ${template.cloudinaryId}`);
+    } catch (e1) {
+      logger.warn(`PDF proxy: direct URL failed (${e1.message}), trying signed URL`);
+
+      // Strategy 2: generate a signed URL
+      try {
+        const signedUrl = cloudinary.url(template.cloudinaryId, {
+          resource_type: 'raw',
+          type: 'upload',
+          sign_url: true,
+          secure: true,
+          expires_at: Math.floor(Date.now() / 1000) + 3600,
+        });
+        logger.info(`PDF proxy: signed URL = ${signedUrl.substring(0, 100)}...`);
+        pdfBuffer = await fetchUrl(signedUrl);
+        logger.info(`PDF proxy: signed URL worked`);
+      } catch (e2) {
+        logger.error(`PDF proxy: signed URL also failed (${e2.message})`);
+
+        // Strategy 3: use cloudinary.api.resource to get secure_url then fetch
+        try {
+          const resource = await cloudinary.api.resource(template.cloudinaryId, { resource_type: 'raw' });
+          logger.info(`PDF proxy: resource API url = ${resource.secure_url}`);
+          pdfBuffer = await fetchUrl(resource.secure_url);
+        } catch (e3) {
+          logger.error(`PDF proxy: all strategies failed. Last error: ${e3.message}`);
+          return res.status(500).json({
+            success: false,
+            message: 'Could not fetch PDF from storage.',
+            debug: `${e1.message} | ${e2.message} | ${e3.message}`,
+          });
+        }
+      }
     }
 
     res.set('Content-Type', 'application/pdf');
@@ -182,7 +215,7 @@ const proxyPdf = async (req, res) => {
     return res.send(pdfBuffer);
   } catch (err) {
     logger.error('Proxy PDF error:', err);
-    return res.status(500).json({ success: false, message: 'Error fetching PDF.' });
+    return res.status(500).json({ success: false, message: 'Error fetching PDF: ' + err.message });
   }
 };
 
