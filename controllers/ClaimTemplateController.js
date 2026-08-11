@@ -37,10 +37,16 @@ const createTemplate = async (req, res) => {
       return res.status(400).json({ success: false, message: 'PDF file is required.' });
     }
 
-    // Upload to Cloudinary as raw file (preserves PDF)
+    // Upload to Cloudinary as raw file, publicly accessible
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { resource_type: 'raw', folder: 'claim-templates', format: 'pdf' },
+        {
+          resource_type: 'raw',
+          folder: 'claim-templates',
+          format: 'pdf',
+          access_mode: 'public',   // makes the URL publicly readable
+          type: 'upload',          // explicit public upload type
+        },
         (err, res) => err ? reject(err) : resolve(res)
       );
       stream.end(req.file.buffer);
@@ -87,7 +93,13 @@ const updateTemplate = async (req, res) => {
       }
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
-          { resource_type: 'raw', folder: 'claim-templates', format: 'pdf' },
+          {
+            resource_type: 'raw',
+            folder: 'claim-templates',
+            format: 'pdf',
+            access_mode: 'public',
+            type: 'upload',
+          },
           (err, res) => err ? reject(err) : resolve(res)
         );
         stream.end(req.file.buffer);
@@ -124,4 +136,27 @@ const deleteTemplate = async (req, res) => {
   }
 };
 
-module.exports = { getTemplates, createTemplate, updateTemplate, deleteTemplate };
+// GET /api/claim-templates/:id/pdf — proxy PDF bytes to avoid CORS/auth issues
+const proxyPdf = async (req, res) => {
+  try {
+    const template = await ClaimTemplate.findById(req.params.id);
+    if (!template) return res.status(404).json({ success: false, message: 'Template not found.' });
+
+    // Fetch from Cloudinary server-side (no CORS, full access)
+    const axios = require('axios');
+    const response = await axios.get(template.cloudinaryUrl, {
+      responseType: 'arraybuffer',
+      timeout: 30000,
+    });
+
+    res.set('Content-Type', 'application/pdf');
+    res.set('Content-Disposition', 'inline');
+    res.set('Cache-Control', 'private, max-age=3600');
+    return res.send(Buffer.from(response.data));
+  } catch (err) {
+    logger.error('Proxy PDF error:', err);
+    return res.status(500).json({ success: false, message: 'Error fetching PDF.' });
+  }
+};
+
+module.exports = { getTemplates, createTemplate, updateTemplate, deleteTemplate, proxyPdf };
