@@ -98,6 +98,9 @@ const updateClaim = async (req, res) => {
       ...(req.body.np_user               !== undefined && { np_user:               req.body.np_user }),
       ...(req.body.item_pending          !== undefined && { item_pending:          req.body.item_pending }),
       ...(req.body.region                !== undefined && { region:                req.body.region }),
+      // Claim pack
+      ...(req.body.insurer               !== undefined && { insurer:               req.body.insurer }),
+      ...(req.body.claim_pack            !== undefined && { claim_pack:            req.body.claim_pack }),
       updatedBy: req.user._id,
     };
 
