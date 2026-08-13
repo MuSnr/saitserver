@@ -13,23 +13,22 @@ const fieldMapSchema = new mongoose.Schema({
 }, { _id: false });
 
 const claimTemplateSchema = new mongoose.Schema({
-  name:         { type: String, required: true },   // e.g. 'GA Insurance Kenya'
-  insurer:      { type: String, required: true },   // e.g. 'GA Insurance'
-  region:       { type: String, enum: ['Kenya', 'South Africa', 'Both'], default: 'Kenya' },
-  cloudinaryUrl:{ type: String, required: true },   // original PDF URL
-  cloudinaryId: { type: String, default: '' },      // for deletion
-  pageCount:    { type: Number, default: 1 },
-  fieldMap:     [fieldMapSchema],                   // mapped fields
-  signatureField: {                                 // where to place signature
-    page:  { type: Number, default: 1 },
-    x:     { type: Number, default: 15 },
-    y:     { type: Number, default: 240 },
-    width: { type: Number, default: 60 },
-    height:{ type: Number, default: 20 },
+  name:      { type: String, required: true },  // e.g. 'GA Insurance Kenya'
+  insurer:   { type: String, required: true },  // e.g. 'GA Insurance'
+  region:    { type: String, enum: ['Kenya', 'South Africa', 'Both'], default: 'Kenya' },
+  gridfsId:  { type: String, default: '' },     // GridFS file _id (stored as string)
+  pageCount: { type: Number, default: 1 },
+  fieldMap:  [fieldMapSchema],
+  signatureField: {
+    page:   { type: Number, default: 1 },
+    x:      { type: Number, default: 15 },
+    y:      { type: Number, default: 240 },
+    width:  { type: Number, default: 60 },
+    height: { type: Number, default: 20 },
   },
-  isDefault:    { type: Boolean, default: false },  // pre-mapped built-in template
-  isActive:     { type: Boolean, default: true },
-  createdBy:    { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  isDefault: { type: Boolean, default: false },
+  isActive:  { type: Boolean, default: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 }, { timestamps: true });
 
 module.exports = mongoose.model('ClaimTemplate', claimTemplateSchema);
