@@ -15,7 +15,7 @@ const fieldMapSchema = new mongoose.Schema({
 const claimTemplateSchema = new mongoose.Schema({
   name:      { type: String, required: true },  // e.g. 'GA Insurance Kenya'
   insurer:   { type: String, required: true },  // e.g. 'GA Insurance'
-  region:    { type: String, enum: ['Kenya', 'South Africa', 'Both'], default: 'Kenya' },
+  region:    { type: String, enum: ['Kenya', 'South Africa', 'Both'], default: 'Both' },
   gridfsId:  { type: String, default: '' },     // GridFS file _id (stored as string)
   pageCount: { type: Number, default: 1 },
   fieldMap:  [fieldMapSchema],
